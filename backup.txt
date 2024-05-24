@@ -1,0 +1,240 @@
+<?php include("./templetes/head.php"); ?>
+<?php
+// Conexión a la base de datos
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "cafetec";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Verificar la conexión
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
+
+// Función para iniciar sesión
+function iniciarSesion($identificacion, $contrasena, $rol, $conn)
+{
+    $sql = "SELECT * FROM usuarios WHERE identificacion = '$identificacion' AND contrasena = '$contrasena' AND id_rol = (SELECT id FROM rol WHERE nombre = '$rol')";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        session_start();
+        $_SESSION['id'] = $row['id'];
+        $_SESSION['nombre'] = $row['nombre'];
+        $_SESSION['rol'] = $rol;
+
+        if ($rol == 'estudiante') {
+            header("Location: http://localhost/cafetec/pages/estudiante/estudiante.php");
+            exit();
+        } else {
+            header("Location: http://localhost/cafetec/pages/estudiante/estudiante.php");
+            exit();
+        }
+    } else {
+        echo "Credenciales inválidas.";
+    }
+}
+
+// Función para registrar usuario
+function registrarUsuario($nombre, $identificacion, $contrasena, $rol, $conn)
+{
+    $rol_id = $conn->query("SELECT id FROM rol WHERE nombre = '$rol'")->fetch_assoc()['id'];
+    $sql = "INSERT INTO usuarios (nombre, identificacion, contrasena, id_rol) VALUES ('$nombre', '$identificacion', '$contrasena', '$rol_id')";
+
+    if ($conn->query($sql) === true) {
+        echo "Registro exitoso.";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// Manejar el envío del formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $tipo_usuario = $_POST['tipo_usuario'];
+
+    if (isset($_POST['iniciar_sesion'])) {
+        if ($tipo_usuario == 'estudiante') {
+            $no_control = $_POST['no_control_estudiante'];
+            $contrasena = $_POST['contrasena_estudiante'];
+            iniciarSesion($no_control, $contrasena, 'estudiante', $conn);
+        } else {
+            $rfc = $_POST['rfc_maestro'];
+            $contrasena = $_POST['contrasena_maestro'];
+            iniciarSesion($rfc, $contrasena, 'maestro', $conn);
+        }
+    } elseif (isset($_POST['registrar'])) {
+        if ($tipo_usuario == 'estudiante') {
+            $nombre = $_POST['nombre_estudiante'];
+            $no_control = $_POST['no_control_registro_estudiante'];
+            $contrasena = $_POST['contrasena_registro_estudiante'];
+            registrarUsuario($nombre, $no_control, $contrasena, 'estudiante', $conn);
+        } else {
+            $nombre = $_POST['nombre_maestro'];
+            $rfc = $_POST['rfc_registro_maestro'];
+            $contrasena = $_POST['contrasena_registro_maestro'];
+            registrarUsuario($nombre, $rfc, $contrasena, 'maestro', $conn);
+        }
+    }
+}
+
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login y Registro</title>
+    <style>
+        /* Estilos CSS */
+        .disabled-button {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div>
+            <marquee behavior="" direction="">BIENVENIDOS A CAFÉTEC</marquee>
+
+            <form id="login_form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                <label for="tipo_usuario">Usuario</label>
+                <select name="tipo_usuario" id="tipo_usuario">
+                    <option value="estudiante">Estudiante</option>
+                    <option value="maestro">Maestro</option>
+                </select>
+                <br>
+
+                <!-- Login Estudiante -->
+                <div id="login_estudiante">
+                    <label for="no_control_estudiante">No. Control</label>
+                    <input type="text" id="no_control_estudiante" name="no_control_estudiante"><br>
+                    <label for="contrasena_estudiante">Contraseña</label>
+                    <input type="password" id="contrasena_estudiante" name="contrasena_estudiante"><br>
+                    <input type="checkbox" onclick="mostrarContrasena('contrasena_estudiante')"> Mostrar Contraseña<br>
+                </div>
+
+                <!-- Registro Estudiante -->
+                <div id="registro_estudiante" style="display: none;">
+                    <label for="nombre_estudiante">Nombre</label>
+                    <input type="text" id="nombre_estudiante" name="nombre_estudiante"><br>
+                    <label for="no_control_registro_estudiante">No. Control</label>
+                    <input type="text" id="no_control_registro_estudiante" name="no_control_registro_estudiante"><br>
+                    <label for="contrasena_registro_estudiante">Contraseña</label>
+                    <input type="password" id="contrasena_registro_estudiante" name="contrasena_registro_estudiante"><br>
+                    <input type="checkbox" onclick="mostrarContrasena('contrasena_registro_estudiante')"> Mostrar Contraseña<br>
+                </div>
+
+                <!-- Login Maestro -->
+                <div id="login_maestro" style="display: none;">
+                    <label for="rfc_maestro">RFC</label>
+                    <input type="text" id="rfc_maestro" name="rfc_maestro"><br>
+                    <label for="contrasena_maestro">Contraseña</label>
+                    <input type="password" id="contrasena_maestro" name="contrasena_maestro"><br>
+                    <input type="checkbox" onclick="mostrarContrasena('contrasena_maestro')"> Mostrar Contraseña<br>
+                </div>
+
+                <!-- Registro Maestro -->
+                <div id="registro_maestro" style="display: none;">
+                    <label for="nombre_maestro">Nombre</label>
+                    <input type="text" id="nombre_maestro" name="nombre_maestro"><br>
+                    <label for="rfc_registro_maestro">RFC</label>
+                    <input type="text" id="rfc_registro_maestro" name="rfc_registro_maestro"><br>
+                    <label for="contrasena_registro_maestro">Contraseña</label>
+                    <input type="password" id="contrasena_registro_maestro" name="contrasena_registro_maestro"><br>
+                    <input type="checkbox" onclick="mostrarContrasena('contrasena_registro_maestro')"> Mostrar Contraseña<br>
+                </div>
+                <button type="submit" name="iniciar_sesion" id="btn_iniciar_sesion">Iniciar Sesión</button>
+                <button type="button" id="btn_registro">Registrar</button>
+                <button  type="submit" name="registrar" style="display: none;" id="btn_registrar">Guardar</button>
+            </form>
+        </div>
+    </main>
+    <script>
+        // JavaScript para mostrar/ocultar campos según el tipo de usuario
+        document.getElementById('tipo_usuario').addEventListener('change', function() {
+            var tipoUsuario = this.value;
+
+            document.getElementById('login_estudiante').style.display = 'none';
+            document.getElementById('registro_estudiante').style.display = 'none';
+            document.getElementById('login_maestro').style.display = 'none';
+            document.getElementById('registro_maestro').style.display = 'none';
+            document.getElementById('btn_registrar').style.display = 'none';
+
+            // Habilitar botones
+            document.getElementById('btn_iniciar_sesion').classList.remove('disabled-button');
+            document.getElementById('btn_registro').classList.remove('disabled-button');
+
+            if (tipoUsuario === 'estudiante') {
+                document.getElementById('login_estudiante').style.display = 'block';
+            } else if (tipoUsuario === 'maestro') {
+                document.getElementById('login_maestro').style.display = 'block';
+            }
+        });
+
+        document.getElementById('btn_registro').addEventListener('click', function() {
+            var tipoUsuario = document.getElementById('tipo_usuario').value;
+
+            document.getElementById('login_estudiante').style.display = 'none';
+            document.getElementById('registro_estudiante').style.display = 'none';
+            document.getElementById('login_maestro').style.display = 'none';
+            document.getElementById('registro_maestro').style.display = 'none';
+            document.getElementById('btn_registrar').style.display = 'block';
+
+            // Deshabilitar botones
+            document.getElementById('btn_iniciar_sesion').classList.add('disabled-button');
+            document.getElementById('btn_registro').classList.add('disabled-button');
+
+            if (tipoUsuario === 'estudiante') {
+                document.getElementById('registro_estudiante').style.display = 'block';
+            } else if (tipoUsuario === 'maestro') {
+                document.getElementById('registro_maestro').style.display = 'block';
+            }
+        });
+
+        // JavaScript para validar campos antes de enviar el formulario de registro
+        document.getElementById('btn_registrar').addEventListener('click', function(event) {
+            var tipoUsuario = document.getElementById('tipo_usuario').value;
+
+            if (tipoUsuario === 'estudiante') {
+                var nombre = document.getElementById('nombre_estudiante').value.trim();
+                var noControl = document.getElementById('no_control_registro_estudiante').value.trim();
+                var contrasena = document.getElementById('contrasena_registro_estudiante').value.trim();
+
+                if (nombre === '' || noControl === '' || contrasena === '') {
+                    alert('Por favor, completa todos los campos.');
+                    event.preventDefault();
+                }
+            } else if (tipoUsuario === 'maestro') {
+                var nombre = document.getElementById('nombre_maestro').value.trim();
+                var rfc = document.getElementById('rfc_registro_maestro').value.trim();
+                var contrasena = document.getElementById('contrasena_registro_maestro').value.trim();
+
+                if (nombre === '' || rfc === '' || contrasena === '') {
+                    alert('Por favor, completa todos los campos.');
+                    event.preventDefault();
+                }
+            }
+        });
+
+        // Función para mostrar/ocultar contraseñas
+        function mostrarContrasena(id) {
+            var input = document.getElementById(id);
+            if (input.type === "password") {
+                input.type = "text";
+            } else {
+                input.type = "password";
+            }
+        }
+    </script>
+</body>
+
+</html>
+<?php include("./templetes/footer.php"); ?>
