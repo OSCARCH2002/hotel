@@ -19,5 +19,3 @@ while ($row = $messages->fetch_assoc()) {
     echo "</div></div>";
 }
 ?>
-
-//awmdlawdaewfiop
