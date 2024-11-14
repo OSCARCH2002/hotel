@@ -1,5 +1,4 @@
 <?php
-// Configuración para el rol de recepcionista
 $sender = "Recepcionista";
 $receiver = "Administrador";
 
@@ -8,7 +7,6 @@ if ($mysqli->connect_error) {
     die("Error de conexión: " . $mysqli->connect_error);
 }
 
-// Insertar mensaje con fecha y hora
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['message'])) {
     $message = $mysqli->real_escape_string($_POST['message']);
     $stmt = $mysqli->prepare("INSERT INTO messages (sender, receiver, message) VALUES (?, ?, ?)");
@@ -19,7 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['message'])) {
     exit();
 }
 
-// Obtener mensajes de la base de datos
 $messages = $mysqli->query("SELECT sender, message, timestamp FROM messages ORDER BY id ASC");
 ?>
 
@@ -172,12 +169,48 @@ $messages = $mysqli->query("SELECT sender, message, timestamp FROM messages ORDE
     </div>
 
     <script>
-        function submitOnEnter(event) {
-            if (event.key === "Enter" && !event.shiftKey) {
-                event.preventDefault();
-                document.getElementById("chatForm").submit();
-            }
+    let isAtBottom = true;
+
+    function submitOnEnter(event) {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            document.getElementById("chatForm").submit();
         }
-    </script>
+    }
+
+    function loadMessages() {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "load_messages.php?sender=<?php echo $sender; ?>&receiver=<?php echo $receiver; ?>", true);
+        xhr.onload = function () {
+            if (this.status === 200) {
+                document.getElementById("chat-box").innerHTML = this.responseText;
+                if (isAtBottom) {
+                    scrollToBottom();
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    function scrollToBottom() {
+        const chatBox = document.getElementById("chat-box");
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    const chatBox = document.getElementById("chat-box");
+
+    chatBox.addEventListener("scroll", () => {
+        isAtBottom = chatBox.scrollTop + chatBox.clientHeight >= chatBox.scrollHeight - 10;
+    });
+
+    setInterval(loadMessages, 1000);
+
+    window.onload = () => {
+        loadMessages();
+        scrollToBottom();
+    };
+</script>
+
+
 </body>
 </html>

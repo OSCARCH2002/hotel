@@ -1,5 +1,4 @@
 <?php
-// Conexión a la base de datos
 $sender = $_GET['sender'];
 $receiver = $_GET['receiver'];
 
@@ -8,7 +7,6 @@ if ($mysqli->connect_error) {
     die("Error de conexión: " . $mysqli->connect_error);
 }
 
-// Obtener mensajes de la base de datos, incluyendo fecha y hora
 $messages = $mysqli->query("SELECT sender, message, timestamp FROM messages ORDER BY id ASC");
 
 while ($row = $messages->fetch_assoc()) {
