@@ -147,7 +147,7 @@ $messages = $mysqli->query("SELECT sender, message, timestamp FROM messages ORDE
     </style>
 </head>
 <body>
-<a href="../recepcionista/dasboard.php" class="volver-button">Volver</a> 
+<a href="../admin/dasboard.php" class="volver-button">Volver</a> 
     <div class="chat-container">
         <h2 class="title">RECEPCIONISTA</h2>
         <div id="chat-box">
