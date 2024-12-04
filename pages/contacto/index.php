@@ -15,10 +15,7 @@
         <label for="Sugerencia">Queja o sugerencia</label><br>
         <textarea name="mensaje" rows="4" cols="40">Escriba su mensaje aquí</textarea><br>
         <input type="button" value="Enviar">
-
-
-    
     </form>    
 </body>
 </html>
-<?php include ("../../temp/header.php");?>
+<?php include ("../../temp/footer.php");?>

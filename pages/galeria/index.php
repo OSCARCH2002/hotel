@@ -14,7 +14,7 @@
   <!-- Título de la galería -->
   <header>
     <div class="title">
-      <h1>NUESTRA GALERÍA</h1>
+      <h1>GALERÍA SAN LUIS ACATLÁN</h1>
     </div>
   </header>
 
@@ -23,42 +23,42 @@
     <div class="gallery-grid">
       <div class="polaroid">
         <img src="./imggaleria/Bambú.jpg" alt="Bambú">
-        <p>Bambú</p>
+        <h3>Pulque</h3>
       </div>
       <div class="polaroid">
         <img src="./imggaleria/Establecimiento.jpg" alt="Establecimiento">
-        <p>Establecimiento</p>
+        <h3>Establecimiento</h3>
       </div>
       <div class="polaroid">
         <img src="./imggaleria/Cerveza.jpg" alt="Cerveza">
-        <p>Cerveza</p>
+        <h3>Papas</h3>
       </div>
       <div class="polaroid">
         <img src="./imggaleria/Crepa.jpg" alt="Crepa">
-        <p>Crepa</p>
+        <h3>Crepa</h3>
       </div>
       <div class="polaroid">
         <img src="./imggaleria/Hamburguesa.jpg" alt="Hamburguesa">
-        <p>Hamburguesa</p>
+        <h3>Hamburguesa</h3>
       </div>
       <div class="polaroid">
         <img src="./imggaleria/Café.jpg" alt="Café">
-        <p>Café</p>
+        <h3>Café</h3>
       </div>
       <div class="polaroid">
-        <img src="./imggaleria/Bambú.jpg" alt="Otro ambiente">
-        <p>Otro ambiente</p>
+        <img src="./imggaleria/Villa.jpg" alt="Villa">
+        <h3>Villa</h3>
       </div>
       <div class="polaroid">
-        <img src="./imggaleria/Café.jpg" alt="Relax en la estancia">
-        <p>Relax en la estancia</p>
+        <img src="./imggaleria/Zocalo.jpg" alt="Jardín">
+        <h3>Jardin</h3>
       </div>
       <div class="polaroid">
-        <img src="./imggaleria/Café.jpg" alt="Relax en la estancia">
-        <p>Relax en la estancia</p>
+        <img src="./imggaleria/Jardin.jpg" alt="Zócalo">
+        <h3>Zócalo</h3>
       </div><div class="polaroid">
-        <img src="./imggaleria/Café.jpg" alt="Relax en la estancia">
-        <p>Relax en la estancia</p>
+        <img src="./imggaleria/Capuccino.jpg" alt="Capuccino">
+        <h3>Capuccino</h3>
       </div>
     </div>
   </section>
