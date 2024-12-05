@@ -149,8 +149,8 @@ $url = "http://$host/hotel/";
           "Reservar" => "reservas",
           "Evento" => "evento",
           "Galería" => "galeria",
-          "Clima" => "Clima",
-          "Contacto" => "Contacto"
+          "Clima" => "clima",
+          "Contacto" => "contacto"
         );
 
         foreach ($paginas as $nombre => $ruta) {
