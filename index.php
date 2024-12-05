@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Micaela</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/style_main.css">
    
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 </head>
@@ -79,16 +79,16 @@
 
 
     <section class="krystal-beach-section">
-        <img src="./images/alberca - copia.jpeg" alt="Alberca">
-        <div class="krystal-beach-content">
-            <h2>HOTEL QUINTA MICAELA</h2>
-            <p>¡UN SERVICIO DE CALIDAD!</p>
-            <p>Descubre el confort y la hospitalidad de primera en el Hotel Quinta Micaela. Ubicado en el corazón de San Luis Acatlán, nuestras elegantes habitaciones
-                y nuestro salón de eventos nos hace tu mejor opción. Nuestro dedicado equipo está listo para hacer de tu
-                estancia una experiencia inolvidable. ¡Ven y disfruta de lo mejor de San Luis Acatlán con nosotros!
-            </p>
-        </div>
-    </section>
+    <img src="./images/alberca - copia.jpeg" alt="Alberca">
+    <div class="krystal-beach-content">
+        <h2>HOTEL QUINTA MICAELA</h2>
+        <p>¡UN SERVICIO DE CALIDAD!</p>
+        <p>Descubre el confort y la hospitalidad de primera en el Hotel Quinta Micaela. Ubicado en el corazón de San Luis Acatlán, nuestras elegantes habitaciones
+            y nuestro salón de eventos nos hace tu mejor opción. Nuestro dedicado equipo está listo para hacer de tu
+            estancia una experiencia inolvidable. ¡Ven y disfruta de lo mejor de San Luis Acatlán con nosotros!
+        </p>
+    </div>
+</section>
 
     <div class="info-container">
         <div class="info">
@@ -127,51 +127,49 @@
         </section>
 
         <section class="container blogs my-5">
-            <h1 class="heading-1 text-center mb-4">OFRECEMOS LOS SIGUIENTES SERVICIOS</h1>
-            <div class="row justify-content-center g-4">
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card card-blog">
-                        <a href="./pages/reservas/index.php" style="text-decoration: none;">
-                            <img src="./images/huesped.jpeg" class="card-img-top" alt="Imagen Blog 1">
-                            <div class="card-body">
-                                <h2 class="card-title">HOSPEDAJE</h2>
-                                <p class="card-text">
-                                    Ofrecemos cuartos con excelente comodidad
-                                </p>
-                            </div>
-                            <div class="overlay">
-                                <div class="overlay-content">
-                                    <h2>HOSPEDAJE</h2>
-                                    <p>Ofrecemos cuartos con excelente comodidad</p>
-                                </div>
-                            </div>
-                        </a>
+    <h1 class="heading-1 text-center mb-4">OFRECEMOS LOS SIGUIENTES SERVICIOS</h1>
+    <div class="row justify-content-center g-4">
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card card-blog">
+                <a href="./pages/reservas/index.php" style="text-decoration: none;">
+                    <img src="./images/huesped.jpeg" class="card-img-top" alt="Imagen Blog 1">
+                    <div class="card-body">
+                        <h2 class="card-title">HOSPEDAJE</h2>
+                        <p class="card-text">
+                            Ofrecemos cuartos con excelente comodidad
+                        </p>
                     </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card card-blog">
-                        <a href="./pages/evento/index.php" style="text-decoration: none;">
-                            <img src="./images/EventoXD.jpeg" class="card-img-top" alt="Imagen Blog 3">
-                            <div class="card-body">
-                                <h3 class="card-title">EVENTOS FAMILIARES</h3>
-                                <p class="card-text">
-                                    ¿Quieres festejar tu cumpleaños?, y... ¿no sabes dónde?, en Quinta Micaela contamos con un módulo de eventos.
-                                </p>
-                            </div>
-                            <div class="overlay">
-                                <div class="overlay-content">
-                                    <h3>EVENTOS FAMILIARES</h3>
-                                    <p>¿Quieres festejar tu cumpleaños?, y... ¿no sabes dónde?, en Quinta Micaela contamos con un módulo de eventos.</p>
-                                </div>
-                            </div>
-                        </a>
+                    <div class="overlay">
+                        <div class="overlay-content">
+                            <h2>HOSPEDAJE</h2>
+                            <p>Ofrecemos cuartos con excelente comodidad</p>
+                        </div>
                     </div>
-                </div>
-
+                </a>
             </div>
-        </section>
+        </div>
 
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card card-blog">
+                <a href="./pages/evento/index.php" style="text-decoration: none;">
+                    <img src="./images/EventoXD.jpeg" class="card-img-top" alt="Imagen Blog 3">
+                    <div class="card-body">
+                        <h3 class="card-title">EVENTOS FAMILIARES</h3>
+                        <p class="card-text">
+                            ¿Quieres festejar tu cumpleaños?, y... ¿no sabes dónde?, en Quinta Micaela contamos con un módulo de eventos.
+                        </p>
+                    </div>
+                    <div class="overlay">
+                        <div class="overlay-content">
+                            <h3>EVENTOS FAMILIARES</h3>
+                            <p>¿Quieres festejar tu cumpleaños?, y... ¿no sabes dónde?, en Quinta Micaela contamos con un módulo de eventos.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
 
     </main>
