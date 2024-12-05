@@ -131,9 +131,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 x.parentNode.insertBefore(s, x);
             }
         }
+        
     </script>
     <div class="container mt-5">
         <div class="text-center">
+<br>
+<br>
+<br>
             <h2>HABITACIONES</h2>
             <h3 class="text-muted">HOTEL QUINTA MICAELA</h3>
             <p>Disfruta de la mejor experiencia en el hotel Quinta Micaela durante tu estancia en

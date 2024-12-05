@@ -2,7 +2,7 @@
 <?php
 $host = "localhost";
 $dbname = "propuesta";
-$username = "root"; 
+$username = "root";
 $password = "567890";
 
 $messageSent = false;
@@ -12,25 +12,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
         $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$name = isset($_POST['name']) ? htmlspecialchars($_POST['name']) : '';
-$correo = isset($_POST['correo']) ? htmlspecialchars($_POST['correo']) : '';
-$asunto = isset($_POST['asunto']) ? htmlspecialchars($_POST['asunto']) : '';
-$mensaje = isset($_POST['mensaje']) ? htmlspecialchars($_POST['mensaje']) : '';
+        $name = isset($_POST['name']) ? htmlspecialchars($_POST['name']) : '';
+        $correo = isset($_POST['correo']) ? htmlspecialchars($_POST['correo']) : '';
+        $asunto = isset($_POST['asunto']) ? htmlspecialchars($_POST['asunto']) : '';
+        $mensaje = isset($_POST['mensaje']) ? htmlspecialchars($_POST['mensaje']) : '';
 
-if (empty($name) || empty($correo) || empty($asunto) || empty($mensaje)) {
-    $errorMessage = "Todos los campos son obligatorios.";
-} else {
-    $sql = "INSERT INTO contacto (name, correo, asuto, mensaje) VALUES (:name, :correo, :asunto, :mensaje)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':correo', $correo);
-    $stmt->bindParam(':asunto', $asunto);
-    $stmt->bindParam(':mensaje', $mensaje);
-    $stmt->execute();
+        if (empty($name) || empty($correo) || empty($asunto) || empty($mensaje)) {
+            $errorMessage = "Todos los campos son obligatorios.";
+        } else {
+            $sql = "INSERT INTO contacto (name, correo, asuto, mensaje) VALUES (:name, :correo, :asunto, :mensaje)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':correo', $correo);
+            $stmt->bindParam(':asunto', $asunto);
+            $stmt->bindParam(':mensaje', $mensaje);
+            $stmt->execute();
 
-    $messageSent = true;
-}
-
+            $messageSent = true;
+        }
     } catch (PDOException $e) {
         $errorMessage = "Error en la conexión: " . $e->getMessage();
     }
@@ -39,6 +38,7 @@ if (empty($name) || empty($correo) || empty($asunto) || empty($mensaje)) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,6 +46,7 @@ if (empty($name) || empty($correo) || empty($asunto) || empty($mensaje)) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../../css/contact.css">
 </head>
+
 <body>
     <div class="header"></div>
 
@@ -103,4 +104,5 @@ if (empty($name) || empty($correo) || empty($asunto) || empty($mensaje)) {
         </form>
     </div>
 </body>
+
 </html>
