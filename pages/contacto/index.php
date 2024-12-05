@@ -58,7 +58,7 @@ if (empty($name) || empty($correo) || empty($asunto) || empty($mensaje)) {
         <div class="contact-card">
             <i class="fas fa-phone-alt"></i>
             <h3>Teléfono</h3>
-            <p>: + 52 741-113-6523</p>
+            <p>+52 741-113-6523</p>
         </div>
         <div class="contact-card">
             <i class="fas fa-envelope"></i>
