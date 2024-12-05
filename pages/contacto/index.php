@@ -83,19 +83,19 @@ if (empty($name) || empty($correo) || empty($asunto) || empty($mensaje)) {
         <?php endif; ?>
         <form action="" method="POST">
             <div class="form-group">
-                <label for="name">Nombre *</label>
+                <label for="name">Nombre</label>
                 <input type="text" id="name" name="name" required>
             </div>
             <div class="form-group">
-                <label for="correo">Correo *</label>
+                <label for="correo">Correo</label>
                 <input type="email" id="correo" name="correo" required>
             </div>
             <div class="form-group">
-                <label for="asunto">Asunto *</label>
+                <label for="asunto">Asunto</label>
                 <input type="text" id="asunto" name="asunto" required>
             </div>
             <div class="form-group">
-                <label for="mensaje">Mensaje *</label>
+                <label for="mensaje">Mensaje</label>
                 <textarea id="mensaje" name="mensaje" required></textarea>
 
             </div>

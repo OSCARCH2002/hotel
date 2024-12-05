@@ -19,35 +19,35 @@ body {
 }
 
 .contact-card {
-    background-color: #fff;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    background-color: #2C2F36; 
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     padding: 20px;
     width: 260px;
     border-radius: 10px;
     text-align: center;
     margin: 15px;
     transition: transform 0.3s;
-    color: #333;
+    color: #EAEAEA; 
 }
 
 .contact-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
 }
 
 .contact-card h3 {
     margin: 10px 0;
-    color: #333;
+    color: #EAEAEA; 
 }
 
 .contact-card p {
     margin: 5px 0;
-    color: #666;
+    color: #B0B3B8;
 }
 
 .contact-card i {
     font-size: 30px;
-    color: #C8A077;
+    color: #C8A077; 
     margin-bottom: 10px;
 }
 
@@ -55,8 +55,8 @@ body {
     max-width: 600px;
     margin: 40px auto;
     padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    background-color: #2C2F36;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     animation: fadeIn 1s ease-in-out;
 }
@@ -75,13 +75,13 @@ body {
 .contact-container h2 {
     text-align: center;
     margin-bottom: 10px;
-    color: #333;
+    color: #EAEAEA; 
 }
 
 .contact-container h3 {
     text-align: center;
     margin-bottom: 20px;
-    color: #C8A077;
+    color: #C8A077; 
     font-weight: bold;
 }
 
@@ -93,14 +93,17 @@ body {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
+    color: #EAEAEA;
 }
 
 .form-group input, .form-group textarea {
     width: calc(100% - 20px);
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #444; 
     border-radius: 5px;
     font-size: 14px;
+    background-color: #3A3D42; 
+    color: #EAEAEA; 
 }
 
 .form-group textarea {
@@ -110,7 +113,7 @@ body {
 .btn-submit {
     display: block;
     width: 100%;
-    background-color: #333;
+    background-color: #C8A077;
     color: #fff;
     padding: 10px;
     border: none;
@@ -121,7 +124,7 @@ body {
 }
 
 .btn-submit:hover {
-    background-color: #555;
+    background-color: #B89A66; 
 }
 
 .message {
@@ -131,9 +134,9 @@ body {
 }
 
 .message.success {
-    color: green;
+    color: #A5D6A7; 
 }
 
 .message.error {
-    color: red;
+    color: #FF6B6B;
 }

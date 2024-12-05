@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 12-11-2024 a las 22:50:45
--- Versión del servidor: 11.5.2-MariaDB
--- Versión de PHP: 8.3.13
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 05-12-2024 a las 05:14:00
+-- Versión del servidor: 10.4.32-MariaDB-log
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -101,7 +101,28 @@ INSERT INTO `cliente` (`id`, `nombre`, `apellidos`, `telefono`) VALUES
 (100, 'Hector', 'Villazana', '7771627381'),
 (102, 'Marco', 'Carrillo', '4543543536'),
 (103, 'Hector', 'Sanchez', '4543543536'),
-(106, 'WEREWR', 'EWRWER', '4543543536');
+(106, 'WEREWR', 'EWRWER', '4543543536'),
+(108, 'REPLICACION', 'test', '7451043813'),
+(109, 'REPLICACION', 'TEST', '5561518726'),
+(110, 'REPLICACION', 'TEST', '5561518726'),
+(111, 'Nubia Jocelyn', 'Lopez', '7443441380'),
+(112, 'Juana', 'Apolonio', '7412931928'),
+(113, 'Lizbet', 'Carrillo', '7451043813');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `contacto`
+--
+
+CREATE TABLE `contacto` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `correo` varchar(100) NOT NULL,
+  `asuto` varchar(150) NOT NULL,
+  `mensaje` text NOT NULL,
+  `hora` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -143,7 +164,10 @@ INSERT INTO `evento` (`id`, `fecha_evento`, `num_personas`, `id_cliente`) VALUES
 (20, '2024-11-01', 100, 93),
 (21, '2024-11-09', 444, 94),
 (22, '2024-10-10', 100, 95),
-(23, '2024-11-05', 111, 103);
+(23, '2024-11-05', 111, 103),
+(27, '2025-04-13', 2, 111),
+(28, '2024-12-05', 22, 112),
+(29, '2024-12-07', 100, 113);
 
 -- --------------------------------------------------------
 
@@ -334,6 +358,12 @@ ALTER TABLE `cliente`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `contacto`
+--
+ALTER TABLE `contacto`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `estado_habitacion`
 --
 ALTER TABLE `estado_habitacion`
@@ -395,7 +425,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+
+--
+-- AUTO_INCREMENT de la tabla `contacto`
+--
+ALTER TABLE `contacto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `estado_habitacion`
@@ -407,7 +443,7 @@ ALTER TABLE `estado_habitacion`
 -- AUTO_INCREMENT de la tabla `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `habitacion`
