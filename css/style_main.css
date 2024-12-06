@@ -25,27 +25,50 @@ body {
     overflow: hidden;
 }
 
+.banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: 1;
+}
+
+.content-banner {
+    position: relative;
+    z-index: 2; 
+    color: #ffffff; 
+}
+
 .content-banner h2 {
-    font-size: 3rem;
+    font-size: 3.5rem; 
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8); 
+    font-family: 'Playfair Display', serif; 
+    font-size: 100px;
+    color:#5B2F26;
 }
 
 .btn {
     padding: 12px 24px;
-    background-color: #007bff;
-    color: white;
+    background-color: #5B2F26; 
+    color: #ffffff; 
     text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s, transform 0.3s;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
     font-weight: bold;
     border: 2px solid transparent;
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 1.2rem; 
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #004494; 
     transform: translateY(-2px);
-    border: 2px solid #0056b3;
+    border: 2px solid #004494; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
 }
 
 /* ========================= */
@@ -83,34 +106,34 @@ body {
 /* ========================= */
 /* Estilos  */
 .krystal-beach-section {
-    display: flex; /* Usar flexbox para alinear la imagen y el contenido */
-    align-items: flex-start; /* Alinear el contenido en la parte superior */
-    padding: 50px 20px; /* Espaciado alrededor de la sección */
-    color: #f8f9fa; /* Color de texto claro */
+    display: flex; 
+    align-items: flex-start; 
+    padding: 50px 20px; 
+    color: #f8f9fa; 
 }
 
 .krystal-beach-section img {
-    flex: 0 0 20%; /* La imagen ocupa el 20% de la sección en pantallas grandes */
-    max-width: 52%; /* Asegurarse de que la imagen no exceda el contenedor */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para la imagen */
+    flex: 0 0 20%; 
+    max-width: 52%; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
 }
 
 .krystal-beach-content {
-    flex: 1; /* El contenido ocupa el resto de la sección */
-    padding: 20px; /* Espaciado interno */
-    text-align: left; /* Alinear texto a la izquierda */
+    flex: 1; 
+    padding: 20px; 
+    text-align: left; 
 }
 
 .krystal-beach-content h2 {
-    font-size: 2.5rem; /* Tamaño de fuente para el título */
-    margin-bottom: 15px; /* Espacio debajo del título */
-    color: #007bff; /* Color del título */
+    font-size: 2.5rem; 
+    margin-bottom: 15px; 
+    color: #007bff; 
 }
 
 .krystal-beach-content p {
-    margin-bottom: 15px; /* Espacio entre párrafos */
-    line-height: 1.6; /* Espaciado entre líneas */
+    margin-bottom: 15px; 
+    line-height: 1.6; 
 }
 
 /* ========================= */
@@ -118,9 +141,9 @@ body {
 /* ========================= */
 @media (max-width: 768px) {
     .krystal-beach-section {
-        flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
-        text-align: center; /* Centrar texto en pantallas pequeñas */
-        padding: 20px; /* Reducir el padding en pantallas pequeñas */
+        flex-direction: column; 
+        text-align: center; 
+        padding: 20px; 
     }
 
     .krystal-beach-section img {

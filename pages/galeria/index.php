@@ -11,9 +11,10 @@
 </head>
 
 <body>
-  <!-- Título de la galería -->
-  <header>
+
+<header>
     <div class="title">
+      <br><br><br>
       <h1>GALERÍA SAN LUIS ACATLÁN</h1>
     </div>
   </header>

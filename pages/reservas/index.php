@@ -411,6 +411,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </script>
 
 </body>
+<?php include "../../temp/footer.php"; ?>
 
 </html>
-<?php include("../../temp/footer.php"); 

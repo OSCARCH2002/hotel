@@ -14,9 +14,8 @@ $url = "http://$host/hotel/";
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
-    /* General Styles */
     body {
-      padding-top: 70px; /* Espacio para el navbar fijo */
+      padding-top: 70px; 
       font-family: 'Arial', sans-serif;
       background-color: #f4f4f9;
       margin: 0;
@@ -44,7 +43,7 @@ $url = "http://$host/hotel/";
 
     .nav-link:hover,
     .nav-link:focus {
-      background-color: #dd5cd9;
+      background-color: #002A32;
       color: white;
     }
 
@@ -54,34 +53,33 @@ $url = "http://$host/hotel/";
 
     .navbar-toggler {
       border: none;
-      background-color: transparent; /* Sin color de fondo */
+      background-color: transparent; 
     }
 
     .navbar-toggler-icon {
-      background-color: transparent; /* Sin fondo */
+      background-color: transparent; 
     }
 
     .navbar-toggler-icon:before,
     .navbar-toggler-icon:after,
     .navbar-toggler-icon span {
-      background-color: #fff; /* Las rayas del ícono serán blancas */
+      background-color: #fff; 
     }
 
     .btn-primary {
       border: none;
       border-radius: 5px;
       padding: 12px 20px;
-      background-color: #dd5cd9;
+      background-color: #002A32;
       color: white;
       font-weight: bold;
       transition: background-color 0.3s;
     }
 
     .btn-primary:hover {
-      background-color: #59a3dc;
+      background-color: #002A32;
     }
 
-    /* Estilos para dispositivos pequeños y medianos (mobile-first) */
     @media (max-width: 1024px) {
       .navbar-collapse {
         position: fixed;
@@ -129,15 +127,14 @@ $url = "http://$host/hotel/";
       }
 
       .navbar-toggler-icon {
-        background-color: transparent; /* Fondo transparente para el ícono */
+        background-color: transparent; 
       }
 
       .nav-item {
-        margin-bottom: 10px; /* Separar más los elementos */
+        margin-bottom: 10px; 
       }
     }
 
-    /* Estilos para pantallas grandes */
     @media (min-width: 1025px) {
       .navbar-collapse {
         display: flex !important;
@@ -162,7 +159,6 @@ $url = "http://$host/hotel/";
       }
     }
 
-    /* Fondo para todas las secciones */
     .section {
       padding: 60px 20px;
       text-align: center;
@@ -210,9 +206,18 @@ $url = "http://$host/hotel/";
           "Contacto" => "contacto"
         );
 
+        $iconos = array(
+          "Principal" => "fas fa-home",
+          "Reservar" => "fas fa-calendar-check",
+          "Evento" => "fas fa-calendar-alt",
+          "Galería" => "fas fa-images",
+          "Clima" => "fas fa-sun",
+          "Contacto" => "fas fa-envelope"
+        );
+
         foreach ($paginas as $nombre => $ruta) {
           echo '<li class="nav-item">';
-          echo '<a class="nav-link" href="' . $url . 'pages/' . $ruta . '/">' . $nombre . '</a>';
+          echo '<a class="nav-link" href="' . $url . 'pages/' . $ruta . '/"><i class="' . $iconos[$nombre] . '"></i> ' . $nombre . '</a>';
           echo '</li>';
         }
         ?>
@@ -225,4 +230,4 @@ $url = "http://$host/hotel/";
 
 </body>
 
-</html>
+</html> 

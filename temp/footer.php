@@ -1,6 +1,26 @@
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  footer {
+    width: 100%;
+    background-color: #002A32;
+    position: relative; 
+    left: 0; 
+    right: 0; 
+  }
+
+  .footer-content {
+    margin: 0;
+    padding: 0;
+  }
+</style>
 <footer>
-  <div class="container-fluid p-4 pb-0">
-    <div class="text-center text-lg-start text-white" style="background-color: rgba(0, 0, 0, 0.6); border-radius: 10px;">
+  <div class="container-fluid p-4 pb-0 footer-content">
+    <div class="text-center text-lg-start text-white" style="border-radius: 10px;">
       <div class="container p-4 pb-0">
         <section>
           <div class="row">
@@ -35,9 +55,6 @@
             </div>
           </div>
         </section>
-      </div>
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-        Lizbeth Carillo
       </div>
     </div>
   </div>
