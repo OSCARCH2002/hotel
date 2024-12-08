@@ -186,7 +186,7 @@ body {
 .map-container {
     flex: 1 1 300px;
     margin: 20px;
-    height: 400px;
+    height: 550px;
 }
 
 #map {
