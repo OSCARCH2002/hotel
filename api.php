@@ -1,8 +1,9 @@
+https://api.openweathermap.org/data/2.5/weather?lat=16.806928732886348&lon=-98.73548463476729&appid=2cb4eb4a40fdb54c74ad930cbfbe7a01
+
+
+
 <?php
 include("../../temp/header.php");
-
-setlocale(LC_TIME, 'es_ES.UTF-8');
-date_default_timezone_set('America/Mexico_City');
 
 $apiKey = "b7a78e8d69f835ed44e7c49de9e85089";
 $lat = 16.8070694;
@@ -21,25 +22,22 @@ if ($currentWeatherData['cod'] == 200) {
     $locationName = $currentWeatherData['name'];
     $temperature = $currentWeatherData['main']['temp'];
     $description = $currentWeatherData['weather'][0]['description'];
-    $icon = $currentWeatherData['weather'][0]['icon'];
+    $icon = $currentWeatherData['weather'][0]['icon']; // Icono del clima
     $humidity = $currentWeatherData['main']['humidity'];
     $windSpeed = $currentWeatherData['wind']['speed'];
-    $currentDayTime = strftime('%A, %d de %B de %Y %H:%M');
 } else {
     $error = $currentWeatherData['message'];
 }
 
-$forecastByDay = [];
+$forecastList = [];
 if ($forecastData['cod'] == "200") {
     foreach ($forecastData['list'] as $forecast) {
-        $date = date("Y-m-d", strtotime($forecast['dt_txt']));
-        $time = strftime('%H:%M', strtotime($forecast['dt_txt'])); // Hora en español
+        $dateTime = $forecast['dt_txt'];
         $temp = $forecast['main']['temp'];
         $desc = $forecast['weather'][0]['description'];
         $icon = $forecast['weather'][0]['icon'];
-
-        $forecastByDay[$date][] = [
-            'time' => $time,
+        $forecastList[] = [
+            'datetime' => $dateTime,
             'temp' => $temp,
             'desc' => $desc,
             'icon' => $icon
@@ -47,6 +45,7 @@ if ($forecastData['cod'] == "200") {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -61,77 +60,93 @@ if ($forecastData['cod'] == "200") {
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #1e3c72, #2a5298);
+            background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
             color: #fff;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
             min-height: 100vh;
         }
 
         .container {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
             padding: 30px;
             width: 90%;
             max-width: 450px;
-            margin: 20px auto;
+            text-align: center;
+            margin: 30px auto 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
         }
 
         .weather-info img {
             width: 120px;
             height: 120px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
+        }
+
+        .weather-info h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .weather-info p {
+            margin: 10px 0;
+            font-size: 1.2rem;
         }
 
         .forecast-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
             gap: 15px;
-            margin: 20px auto;
+            overflow-x: auto;
+            padding: 20px;
+            width: 90%;
             max-width: 1200px;
+            margin: 20px 0;
         }
 
         .forecast-item {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 15px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 160px;
             text-align: center;
-            cursor: pointer;
-            width: 150px;
-            transition: transform 0.2s ease-in-out;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, background 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
         .forecast-item:hover {
-            transform: scale(1.1);
+            transform: translateY(-10px);
             background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
         }
 
-        .details {
-            display: none;
-            margin-top: 20px;
-            text-align: center;
-            width: 90%;
-            max-width: 1200px;
-            margin: 20px auto;
+        .forecast-item img {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 10px;
         }
 
-        .details-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
+        .forecast-item h4 {
+            font-size: 1.1rem;
+            margin: 5px 0;
+            color: #e0f7fa;
         }
 
-        .detail-item {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 10px;
-            text-align: center;
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .detail-item:hover {
-            transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.3);
+        .forecast-item p {
+            font-size: 1rem;
+            margin: 5px 0;
         }
 
         footer {
@@ -147,6 +162,7 @@ if ($forecastData['cod'] == "200") {
             margin: 0 auto;
             padding: 0;
             max-width: 1200px;
+            /* Limita el ancho máximo del contenido */
         }
 
         .footer-content .row {
@@ -177,59 +193,50 @@ if ($forecastData['cod'] == "200") {
         .footer-content .btn {
             margin-top: 10px;
         }
-    </style>
-    <script>
-        function toggleDetails(day) {
-            document.querySelectorAll('.details').forEach(el => el.style.display = 'none');
-            document.getElementById(day).style.display = 'block';
+
+        @media (max-width: 768px) {
+            .forecast-container {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .forecast-item {
+                min-width: 120px;
+            }
         }
-    </script>
+    </style>
 </head>
-<br><br><br>
 
 <body>
+    <br><br><br><br>
     <div class="container">
         <div class="weather-info">
             <?php if (isset($temperature)): ?>
-                <h1>San Luis Acatlán</h1>
-                <h3><?= ucfirst($currentDayTime) ?></h3>
+                <i class="fas fa-cloud-sun icon"></i>
+                <h1>Clima en San Luis Acatlán</h1>
                 <img src="https://openweathermap.org/img/wn/<?= $icon ?>@4x.png" alt="Icono del clima">
-                <p><strong><?= htmlspecialchars($locationName) ?></strong></p>
-                <p><?= ucfirst($description) ?>, <?= $temperature ?>°C</p>
-                <p>Humedad: <?= $humidity ?>% | Viento: <?= $windSpeed ?> m/s</p>
-            <?php else: ?>
-                <p>Error: <?= htmlspecialchars($error) ?></p>
+                <h2><?= htmlspecialchars($locationName) ?></h2>
+                <p><strong>Temperatura:</strong> <?= $temperature ?>°C</p>
+                <p><strong>Descripción:</strong> <?= ucfirst($description) ?></p>
+                <p><strong>Humedad:</strong> <?= $humidity ?>%</p>
+                <p><strong>Viento:</strong> <?= $windSpeed ?> m/s</p>
+            <?php elseif (isset($error)): ?>
+                <p><strong>Error:</strong> <?= htmlspecialchars($error) ?></p>
             <?php endif; ?>
         </div>
     </div>
 
-    <h2>Pronóstico para los siguientes dias</h2>
+    <h3 style="margin-top: 20px; text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.7);">Pronóstico de los próximos días</h3>
     <div class="forecast-container">
-        <?php foreach ($forecastByDay as $day => $details): ?>
-            <div class="forecast-item" onclick="toggleDetails('day-<?= $day ?>')">
-                <h3><?= ucfirst(strftime('%A', strtotime($day))) ?></h3>
-                <img src="https://openweathermap.org/img/wn/<?= $details[0]['icon'] ?>.png" alt="Icono del clima">
-                <p><strong><?= $details[0]['temp'] ?>°C</strong></p>
-                <p><?= ucfirst($details[0]['desc']) ?></p>
+        <?php foreach ($forecastList as $forecast): ?>
+            <div class="forecast-item">
+                <h4><?= date("d/m H:i", strtotime($forecast['datetime'])) ?></h4>
+                <img src="https://openweathermap.org/img/wn/<?= $forecast['icon'] ?>@2x.png" alt="Icono del clima">
+                <p><strong><?= $forecast['temp'] ?>°C</strong></p>
+                <p><?= ucfirst($forecast['desc']) ?></p>
             </div>
         <?php endforeach; ?>
     </div>
-
-    <?php foreach ($forecastByDay as $day => $details): ?>
-        <div class="details" id="day-<?= $day ?>">
-            <h3>Detalles para <?= ucfirst(strftime('%A, %d de %B', strtotime($day))) ?></h3>
-            <div class="details-grid">
-                <?php foreach ($details as $detail): ?>
-                    <div class="detail-item">
-                        <p><strong><?= $detail['time'] ?></strong></p>
-                        <img src="https://openweathermap.org/img/wn/<?= $detail['icon'] ?>.png" alt="Icono del clima">
-                        <p><?= $detail['temp'] ?>°C</p>
-                        <p><?= ucfirst($detail['desc']) ?></p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    <?php endforeach; ?>
     <footer>
         <div class="container-fluid footer-content">
             <div class="text-center text-lg-start text-white">
@@ -264,6 +271,6 @@ if ($forecastData['cod'] == "200") {
             </div>
         </div>
     </footer>
+    </footer>
 </body>
-
 </html>
