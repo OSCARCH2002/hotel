@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Micaela</title>
-    <link rel="stylesheet" href="./css/style_main.css">
+    <link rel="stylesheet" href="./assets/css/style_main.css">
    
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 </head>
@@ -79,7 +79,7 @@
 
 
     <section class="krystal-beach-section">
-    <img src="./images/alberca - copia.jpeg" alt="Alberca">
+    <img src="./assets/images/alberca - copia.jpeg" alt="Alberca">
     <div class="krystal-beach-content">
         <h2>HOTEL QUINTA MICAELA</h2>
         <p>¡UN SERVICIO DE CALIDAD!</p>
@@ -119,11 +119,11 @@
 
     <main class="main-content">
         <section class="gallery">
-            <img src="./images/agua.jpeg" alt="Gallery Img1" class="gallery-img-1" />
-            <img src="./images/alberca.jpeg" alt="Gallery Img2" class="gallery-img-2" />
-            <img src="./images/capilla.jpeg" alt="Gallery Img3" class="gallery-img-3" />
-            <img src="./images/fondo1.jpeg" alt="Gallery Img4" class="gallery-img-4" />
-            <img src="./images/rio.jpeg" alt="Gallery Img5" class="gallery-img-5" />
+            <img src="./assets/images/agua.jpeg" alt="Gallery Img1" class="gallery-img-1" />
+            <img src="./assets/images/alberca.jpeg" alt="Gallery Img2" class="gallery-img-2" />
+            <img src="./assets/images/capilla.jpeg" alt="Gallery Img3" class="gallery-img-3" />
+            <img src="./assets/images/fondo1.jpeg" alt="Gallery Img4" class="gallery-img-4" />
+            <img src="./assets/images/rio.jpeg" alt="Gallery Img5" class="gallery-img-5" />
         </section>
 
         <section class="container blogs my-5">
@@ -132,7 +132,7 @@
         <div class="col-12 col-md-6 col-lg-4">
             <div class="card card-blog">
                 <a href="./pages/reservas/index.php" style="text-decoration: none;">
-                    <img src="./images/huesped.jpeg" class="card-img-top" alt="Imagen Blog 1">
+                    <img src="./assets/images/huesped.jpeg" class="card-img-top" alt="Imagen Blog 1">
                     <div class="card-body">
                         <h2 class="card-title">HOSPEDAJE</h2>
                         <p class="card-text">
@@ -152,7 +152,7 @@
         <div class="col-12 col-md-6 col-lg-4">
             <div class="card card-blog">
                 <a href="./pages/evento/index.php" style="text-decoration: none;">
-                    <img src="./images/EventoXD.jpeg" class="card-img-top" alt="Imagen Blog 3">
+                    <img src="./assets/images/EventoXD.jpeg" class="card-img-top" alt="Imagen Blog 3">
                     <div class="card-body">
                         <h3 class="card-title">EVENTOS FAMILIARES</h3>
                         <p class="card-text">

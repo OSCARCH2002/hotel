@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../assets/css/style_evento.css">
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Establecer la fecha mínima del calendario como hoy
@@ -162,17 +162,17 @@ function initLandbot() {
             <div class="row">
                 <div class="col-md-4">
                     <div class="gallery">
-                        <img src="../../images/evento1.jpeg" alt="Foto 1">
+                        <img src="../../assets/images/evento1.jpeg" alt="Foto 1">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="gallery">
-                        <img src="../../images/evento2.jpeg" alt="Foto 2">
+                        <img src="../../assets/images/evento2.jpeg" alt="Foto 2">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="gallery">
-                        <img src="../../images/evento3.jpeg" alt="Foto 3">
+                        <img src="../../assets/images/evento3.jpeg" alt="Foto 3">
                     </div>
                 </div>
             </div>

@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reservas Quinta Micaela</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./stylehuesped.css">
+    <link rel="stylesheet" href="../../assets/css/style_reservas.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
         rel="stylesheet">
 </head>
@@ -152,12 +152,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="position-relative" id="imageContainer">
                         <div class="image-stack">
-                            <img src="../../images/renta.jpeg" alt="Cama" class="img-fluid rounded image-stack-item">
-                            <img src="../../images/lavado.jpg" alt="Habitación"
+                            <img src="../../assets/images/renta.jpeg" alt="Cama" class="img-fluid rounded image-stack-item">
+                            <img src="../../assets/images/lavado.jpg" alt="Habitación"
                                 class="img-fluid rounded image-stack-item">
-                            <img src="../../images/Cuarto_Camas_Individual.jpeg" alt="Servicios"
+                            <img src="../../assets/images/Cuarto_Camas_Individual.jpeg" alt="Servicios"
                                 class="img-fluid rounded image-stack-item">
-                            <img src="../../images/Interio_Cuarto.jpeg" alt="Amenidades"
+                            <img src="../../assets/images/Interio_Cuarto.jpeg" alt="Amenidades"
                                 class="img-fluid rounded image-stack-item">
                         </div>
                         <!-- Botón Ver más sobre la imagen -->
@@ -238,19 +238,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img src="../../images/renta.jpeg" class="d-block w-100" alt="Foto 1">
+                                    <img src="../../assets/images/renta.jpeg" class="d-block w-100" alt="Foto 1">
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="../../images/Cuarto_Camas_Individual.jpeg" class="d-block w-100" alt="Foto 2">
+                                    <img src="../../assets/images/Cuarto_Camas_Individual.jpeg" class="d-block w-100" alt="Foto 2">
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="../../images/huesped.jpeg" class="d-block w-100" alt="Foto 3">
+                                    <img src="../../assets/images/huesped.jpeg" class="d-block w-100" alt="Foto 3">
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="../../images/Servicios_Cuarto.jpeg" class="d-block w-100" alt="Foto 4">
+                                    <img src="../../assets/images/Servicios_Cuarto.jpeg" class="d-block w-100" alt="Foto 4">
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="../../images/Interio_Cuarto.jpeg" class="d-block w-100" alt="Foto 5">
+                                    <img src="../../assets/images/Interio_Cuarto.jpeg" class="d-block w-100" alt="Foto 5">
                                 </div>
                             </div>
 
