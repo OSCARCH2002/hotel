@@ -1,11 +1,6 @@
-#Aplicacion Micaela Confort
+# Aplicacion Micaela Confort
 
-APlicacion web de reservas de el hotel micaela confort, ubicado en San Luis acatlan
 
----
-Estructura del Proyecto
-
-```
 ├───.vscode
 ├───assets
 │   ├───css
