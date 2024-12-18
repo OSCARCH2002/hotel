@@ -1,0 +1,5 @@
+Options -Indexes
+<FilesMatch "(config\.php|\.env|\.sql|\.db)">
+    Deny from all
+</FilesMatch>
+
