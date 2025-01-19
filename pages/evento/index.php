@@ -1,71 +1,61 @@
 <?php
 include("../../temp/header.php");
 
-// Datos de conexión a la base de datos
 $servername = "localhost";
 $username = "root";
 $password = "567890";
-$dbname = "propuesta"; // Cambié el nombre de la base de datos a 'propuesta'
+$dbname = "propuesta";
 
-// Crear conexión
 $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-// Establecer el modo de error de PDO a excepción
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Verificar si se ha enviado el formulario
 $message = '';
 $message_type = '';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtener los valores del formulario
     $nombre = $_POST['nombre'];
     $apellidos = $_POST['apellidos'];
     $telefono = $_POST['telefono'];
     $fecha_evento = $_POST['fecha-evento'];
     $num_personas = $_POST['num-personas'];
 
-    // Primero, insertar o verificar al cliente
     $stmt = $conn->prepare("SELECT id FROM cliente WHERE nombre = :nombre AND apellidos = :apellidos AND telefono = :telefono");
     $stmt->execute(['nombre' => $nombre, 'apellidos' => $apellidos, 'telefono' => $telefono]);
     $id_cliente = $stmt->fetchColumn();
 
     if (!$id_cliente) {
-        // Si el cliente no existe, insertarlo
         $stmt = $conn->prepare("INSERT INTO cliente (nombre, apellidos, telefono) VALUES (:nombre, :apellidos, :telefono)");
         $stmt->execute(['nombre' => $nombre, 'apellidos' => $apellidos, 'telefono' => $telefono]);
-        $id_cliente = $conn->lastInsertId(); // Obtener el ID del nuevo cliente
+        $id_cliente = $conn->lastInsertId();
     }
 
-    // Comprobar si ya existe un evento en la misma fecha
     $stmt = $conn->prepare("SELECT COUNT(*) FROM evento WHERE fecha_evento = :fecha_evento");
     $stmt->execute(['fecha_evento' => $fecha_evento]);
     $count = $stmt->fetchColumn();
 
     if ($count > 0) {
         $message = "Lo siento, ya hay un evento programado para esta fecha.";
-        $message_type = 'danger';
+        $message_type = 'error';
     } else {
-        // Preparar la consulta SQL para insertar los datos en la tabla evento
         $stmt = $conn->prepare("INSERT INTO evento (id_cliente, fecha_evento, num_personas) VALUES (:id_cliente, :fecha_evento, :num_personas)");
 
-        // Ejecutar la consulta
         try {
             $stmt->execute([
                 'id_cliente' => $id_cliente,
                 'fecha_evento' => $fecha_evento,
                 'num_personas' => $num_personas
             ]);
-            $message = "La reserva se ha realizado con éxito.";
+            $message = "Evento realizado con éxito.";
             $message_type = 'success';
         } catch (PDOException $e) {
-            $message = "Error al realizar la reserva: " . $e->getMessage();
-            $message_type = 'danger';
+            $message = "Error al realizar el evento: " . $e->getMessage();
+            $message_type = 'error';
         }
     }
 
-    // Cerrar la conexión
-    $conn = null; // Cerrar la conexión PDO
+    $conn = null;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -76,32 +66,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link rel="stylesheet" href="../../assets/css/style_evento.css">
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Establecer la fecha mínima del calendario como hoy
             const fechaEventoInput = document.getElementById('fecha-evento');
             const today = new Date().toISOString().split('T')[0];
             fechaEventoInput.setAttribute('min', today);
 
-            // Mostrar alerta si hay un mensaje
             const message = "<?php echo $message; ?>";
             const messageType = "<?php echo $message_type; ?>";
             if (message) {
-                const alertDiv = document.createElement('div');
-                alertDiv.className = `alert alert-${messageType} mt-3`;
-                alertDiv.role = 'alert';
-                alertDiv.innerText = message;
-                document.querySelector('.contenido').prepend(alertDiv);
+                Swal.fire({
+                    icon: messageType,
+                    title: messageType === 'success' ? 'Éxito' : 'Error',
+                    text: message,
+                    confirmButtonText: 'Aceptar',
+                });
             }
+
+            const form = document.querySelector('.formulario');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: '¿Confirmar envío?',
+                    text: 'Por favor revisa que todos los datos estén correctos.',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, enviar',
+                    cancelButtonText: 'Cancelar',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
         });
     </script>
 </head>
+
 <body>
     <div class="container">
         <br>
         <h1 class="section-title">Reservar evento</h1>
-
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="contenido">
@@ -110,27 +119,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label for="nombre">Nombre:</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese su Nombre" required>
                         </div>
-
                         <div class="form-group">
                             <label for="apellidos">Apellidos:</label>
                             <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Ingrese sus Apellidos" required>
                         </div>
-
                         <div class="form-group">
                             <label for="telefono">Teléfono:</label>
-                            <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ingrese su número de Teléfono" required>
+                            <input type="tel"
+                                class="form-control"
+                                id="telefono"
+                                name="telefono"
+                                placeholder="Ingrese su número de Teléfono"
+                                required
+                                pattern="\d{10}"
+                                maxlength="10"
+                                minlength="10"
+                                title="El número de teléfono debe contener exactamente 10 dígitos.">
                         </div>
 
                         <div class="form-group">
                             <label for="fecha-evento">Fecha de evento:</label>
-                            <input type="date" class="form-control" id="fecha-evento" name="fecha-evento" placeholder="Seleccione la Fecha" required>
+                            <input type="date" class="form-control" id="fecha-evento" name="fecha-evento" required>
                         </div>
-
                         <div class="form-group">
                             <label for="num-personas">Número de personas:</label>
-                            <input type="number" class="form-control" id="num-personas" name="num-personas" placeholder="Ingrese el Número de Personas" min="1" max="200" required>
+                            <input type="number" class="form-control" id="num-personas" name="num-personas" min="1" max="200" required>
                         </div>
-
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Enviar</button>
                         </div>
@@ -193,7 +207,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </body>
 
-<!-- Footer -->
+
 <?php include "../../temp/footer.php"; ?>
 
 </html>

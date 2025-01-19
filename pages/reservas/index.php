@@ -1,11 +1,11 @@
 <?php
 include("../../temp/header.php");
+echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">';
+echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
-// Habilita el reporte de errores
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Configura la conexión a la base de datos
 $servername = "localhost";
 $username = "root";
 $password = "567890";
@@ -13,14 +13,11 @@ $dbname = "propuesta";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verifica la conexión
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Procesa el formulario si se envía
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtén y sanitiza los datos del formulario
     $roomNumber = intval($_POST['roomNumber']);
     $nombre = $conn->real_escape_string(trim($_POST['nombre']));
     $apellidos = $conn->real_escape_string(trim($_POST['apellidos']));
@@ -31,13 +28,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $totalNinos = intval($_POST['totalNinos']);
     $totalPagar = $conn->real_escape_string(trim($_POST['totalPagar']));
 
-    // Calcula el número de noches
     $fecha1 = new DateTime($fechaLlegada);
     $fecha2 = new DateTime($fechaSalida);
     $diferencia = $fecha2->diff($fecha1);
     $noches = $diferencia->days;
 
-    // Verifica la disponibilidad de la habitación
     $stmt = $conn->prepare("
         SELECT id FROM reservas
         WHERE id_habitacion = ? AND (fecha_llegada <= ? AND fecha_salida >= ?)
@@ -47,49 +42,67 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        echo "<script>alert('La habitación está ocupada en las fechas seleccionadas.');</script>";
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'La habitación está ocupada en las fechas seleccionadas.'
+            });
+        </script>";
     } else {
-        // Inserta el cliente en la tabla `cliente`
         $stmt = $conn->prepare("INSERT INTO cliente (nombre, apellidos, telefono) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $nombre, $apellidos, $telefono);
 
         if ($stmt->execute()) {
-            $clienteId = $stmt->insert_id; // Obtén el ID del cliente insertado
+            $clienteId = $stmt->insert_id; 
 
-            // Calcula el total a pagar
-            $total = $noches * 300; // Se multiplica el número de noches por 300
+            $total = $noches * 300; 
 
             if ($noches > 30) {
-                $total = 1800; // Cobro automático por estancia mayor a 30 días
+                $total = 1800; 
             }
 
             if ($totalAdultos > 2) {
                 $adultosExtras = $totalAdultos - 2;
                 $total += $adultosExtras * 50;
-
             }
-
 
             $stmt = $conn->prepare("INSERT INTO reservas (id_cliente, id_habitacion, fecha_llegada, fecha_salida, total_adultos, total_ninos, total_pagar)
                                     VALUES (?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("iissddd", $clienteId, $roomNumber, $fechaLlegada, $fechaSalida, $totalAdultos, $totalNinos, $total);
 
             if ($stmt->execute()) {
-                $reservaId = $stmt->insert_id; // Obtén el ID de la reserva insertada
+                $reservaId = $stmt->insert_id; 
                 echo "<script>
-                    alert('Reserva exitosa');
-                    // Redirigir a la generación del PDF
-                    window.open('../../libs/generate_pdf.php?reservaId=$reservaId', '_blank');
-                    // Redirigir a la página de reservas
-                    window.location.href = '../../pages/reservas';
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Reserva exitosa',
+                        text: 'Tu reserva ha sido realizada con éxito.',
+                        confirmButtonText: 'Aceptar'
+                    }).then(() => {
+                        // Redirigir a la generación del PDF
+                        window.open('../../libs/generate_pdf.php?reservaId=$reservaId', '_blank');
+                        // Redirigir a la página de reservas
+                        window.location.href = '../../pages/reservas';
+                    });
                 </script>";
             } else {
-                // Muestra el error de la consulta de reservas
-                echo "<div class='alert alert-danger' role='alert'>Error al realizar la reserva: " . $stmt->error . "</div>";
+                echo "<script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al realizar la reserva: " . $stmt->error . "'
+                    });
+                </script>";
             }
         } else {
-            // Muestra el error de la consulta de cliente
-            echo "<div class='alert alert-danger' role='alert'>Error al registrar el cliente: " . $stmt->error . "</div>";
+            echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al registrar el cliente: " . $stmt->error . "'
+                });
+            </script>";
         }
     }
 
@@ -97,8 +110,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -109,44 +120,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Reservas Quinta Micaela</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/style_reservas.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
-        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
     <div class="container mt-5">
         <div class="text-center">
-<br>
-<br>
-<br>
+            <br>
+            <br>
+            <br>
             <h2>HABITACIONES</h2>
             <h3 class="text-muted">HOTEL QUINTA MICAELA</h3>
-            <p>Disfruta de la mejor experiencia en el hotel Quinta Micaela durante tu estancia en
-                San Luis Acatlán. Somos tu mejor opción, ya que ofrecemos precios accesibles
-                y competitivos. Tú decides cómo deseas descansar.</p>
+            <p>Disfruta de la mejor experiencia en el hotel Quinta Micaela durante tu estancia en San Luis Acatlán. Somos tu mejor opción, ya que ofrecemos precios accesibles y competitivos. Tú decides cómo deseas descansar.</p>
         </div>
 
         <div class="container my-5">
             <div class="row">
-
                 <div class="col-md-6">
-
                     <div class="position-relative" id="imageContainer">
                         <div class="image-stack">
                             <img src="../../assets/images/renta.jpeg" alt="Cama" class="img-fluid rounded image-stack-item">
-                            <img src="../../assets/images/lavado.jpg" alt="Habitación"
-                                class="img-fluid rounded image-stack-item">
-                            <img src="../../assets/images/Cuarto_Camas_Individual.jpeg" alt="Servicios"
-                                class="img-fluid rounded image-stack-item">
-                            <img src="../../assets/images/Interio_Cuarto.jpeg" alt="Amenidades"
-                                class="img-fluid rounded image-stack-item">
+                            <img src="../../assets/images/lavado.jpg" alt="Habitación" class="img-fluid rounded image-stack-item">
+                            <img src="../../assets/images/Cuarto_Camas_Individual.jpeg" alt="Servicios" class="img-fluid rounded image-stack-item">
+                            <img src="../../assets/images/Interio_Cuarto.jpeg" alt="Amenidades" class="img-fluid rounded image-stack-item">
                         </div>
-                        <!-- Botón Ver más sobre la imagen -->
-                        <button class="ver-mas-btn" id="verMasBtn" data-bs-toggle="modal"
-                            data-bs-target="#imageGalleryModal">Ver más fotos</button>
+                        <button class="ver-mas-btn" id="verMasBtn" data-bs-toggle="modal" data-bs-target="#imageGalleryModal">Ver más fotos</button>
                     </div>
 
-                    <!-- CARRUSEL DE ICONOS DE AMENIDADES -->
                     <div id="amenitiesCarousel" class="carousel slide mt-5" data-bs-ride="carousel">
                         <div class="carousel-inner text-center">
                             <div class="carousel-item active">
@@ -170,14 +172,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <p>Colchones Matrimoniales</p>
                             </div>
                         </div>
-                        <!-- Botones de control a los lados -->
-                        <button class="carousel-control-prev" type="button" data-bs-target="#amenitiesCarousel"
-                            data-bs-slide="prev">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#amenitiesCarousel" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Anterior</span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#amenitiesCarousel"
-                            data-bs-slide="next">
+                        <button class="carousel-control-next" type="button" data-bs-target="#amenitiesCarousel" data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Siguiente</span>
                         </button>
@@ -192,8 +191,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <p class="room-description">$300 la noche</p>
                     <p class="room-description">$1,800 la renta</p>
 
-                    <button class="room-button" data-bs-toggle="modal" data-bs-target="#reservationModal">Reservar
-                        ahora</button>
+                    <button class="room-button" data-bs-toggle="modal" data-bs-target="#reservationModal">Reservar ahora</button>
 
                     <div class="text-center mt-5">
                         <h4>OFRECEMOS LOS SIGUIENTES SERVICIOS</h4>
@@ -208,7 +206,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
 
-        <!-- MODAL DE GALERÍA DE IMÁGENES -->
         <div class="modal fade" id="imageGalleryModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
@@ -235,17 +232,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>
 
-
-
-                            <!-- Controles del carrusel -->
                             <div class="carousel-controls">
-                                <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel"
-                                    data-bs-slide="prev">
+                                <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Anterior</span>
                                 </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel"
-                                    data-bs-slide="next">
+                                <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Siguiente</span>
                                 </button>
@@ -256,10 +248,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
 
-
-        <!-- MODAL DE RESERVA -->
-        <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -279,19 +268,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre"
-                                    pattern="[A-Za-zÀ-ÿ\s]+" title="Solo se permiten letras y espacios" required>
+                                <input type="text" class="form-control" id=" nombre" name="nombre" pattern="[A-Za-zÀ-ÿ\s]+" title="Solo se permiten letras y espacios" required>
                             </div>
                             <div class="mb-3">
                                 <label for="apellidos" class="form-label">Apellidos</label>
-                                <input type="text" class="form-control" id="apellidos" name="apellidos"
-                                    pattern="[A-Za-zÀ-ÿ\s]+" title="Solo se permiten letras y espacios" required>
+                                <input type="text" class="form-control" id="apellidos" name="apellidos" pattern="[A-Za-zÀ-ÿ\s]+" title="Solo se permiten letras y espacios" required>
                             </div>
                             <div class="mb-3">
                                 <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" id="telefono" name="telefono" maxlength="10"
-                                    pattern="\d{10}" title="Debe contener exactamente 10 dígitos"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+                                <input type="text" class="form-control" id="telefono" name="telefono" maxlength="10" pattern="\d{10}" title="Debe contener exactamente 10 dígitos" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
                             </div>
 
                             <div class="mb-3">
@@ -303,21 +288,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <input type="date" class="form-control" id="fechaSalida" name="fechaSalida" required>
                             </div>
 
-
                             <div class="mb-3">
                                 <label for="totalAdultos" class="form-label">Número de Adultos</label>
-                                <input type="number" class="form-control" id="totalAdultos" name="totalAdultos" min="1"
-                                    required>
+                                <input type="number" class="form-control" id="totalAdultos" name="totalAdultos" min="1" required>
                             </div>
                             <div class="mb-3">
                                 <label for="totalNinos" class="form-label">Número de Niños</label>
-                                <input type="number" class="form-control" id="totalNinos" name="totalNinos" min="0"
-                                    max="2" required>
-                            </div> <!-- Cierre correcto del div -->
+                                <input type="number" class="form-control" id="totalNinos" name="totalNinos" min="0" max="2" required>
+                            </div>
                             <div class="mb-3">
                                 <label for="totalPagar" class="form-label">Total a Pagar</label>
                                 <input type="text" class="form-control" id="totalPagar" name="totalPagar" readonly>
-                            </div> <!-- Cierre correcto del div -->
+                            </div>
                             <button type="submit" class="btn btn-primary">Finalizar reserva</button>
                         </form>
                     </div>
@@ -327,7 +309,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 const totalPagarInput = document.getElementById('totalPagar');
                 const totalAdultosInput = document.getElementById('totalAdultos');
                 const fechaLlegadaInput = document.getElementById('fechaLlegada');
@@ -336,13 +318,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 const precioPorNoche = 300;
                 const precioRenta = 1800;
                 const comisionPorAdultoExtra = 50;
-                   // Establece la fecha mínima para los campos de fecha
-                   const today = new Date().toISOString().split('T')[0];
+
+                const today = new Date().toISOString().split('T')[0];
                 fechaLlegadaInput.setAttribute('min', today);
                 fechaSalidaInput.setAttribute('min', today);
 
-
-         
                 function calcularTotal() {
                     const totalAdultos = parseInt(totalAdultosInput.value) || 0;
                     const totalNinos = parseInt(document.getElementById('totalNinos').value) || 0;
@@ -361,30 +341,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             const adultosExtras = totalAdultos - 2;
                             const comision = adultosExtras * comisionPorAdultoExtra;
                             total += comision;
-                            alert(`Se cobrará una comisión de ${comision} pesos por ${adultosExtras} adulto adicional.`);
+
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Comisión por Adultos Extras',
+                                text: `Se cobrará una comisión de ${comision} pesos por ${adultosExtras} adulto adicional.`,
+                                confirmButtonText: 'Aceptar'
+                            });
                         }
 
                         totalPagarInput.value = total.toFixed(2);
                     }
                 }
-
                 totalAdultosInput.addEventListener('input', calcularTotal);
                 fechaLlegadaInput.addEventListener('change', calcularTotal);
                 fechaSalidaInput.addEventListener('change', calcularTotal);
 
-                // Validar que la fecha de llegada no sea anterior a hoy
-                fechaLlegadaInput.addEventListener('change', function () {
+                fechaLlegadaInput.addEventListener('change', function() {
                     if (this.value < today) {
-                        alert('La fecha de llegada no puede ser una fecha pasada.');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Fecha Inválida',
+                            text: 'La fecha de llegada no puede ser una fecha pasada.'
+                        });
                         this.value = '';
                     }
-                    fechaSalidaInput.setAttribute('min', this.value);  // Establece la fecha mínima de salida basada en la llegada
+                    fechaSalidaInput.setAttribute('min', this.value);
                 });
 
-                // Validar que la fecha de salida sea después de la llegada
-                fechaSalidaInput.addEventListener('change', function () {
+                fechaSalidaInput.addEventListener('change', function() {
                     if (this.value <= fechaLlegadaInput.value) {
-                        alert('La fecha de salida debe ser después de la fecha de llegada.');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Fecha Inválida',
+                            text: 'La fecha de salida debe ser después de la fecha de llegada.'
+                        });
                         this.value = '';
                     }
                 });

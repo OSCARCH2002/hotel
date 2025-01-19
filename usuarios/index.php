@@ -147,6 +147,72 @@ $conn->close();
     <title>Registro e Inicio de Sesión</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style_usuarios.css">
+<<<<<<< HEAD
+=======
+    <style>
+        .password-container {
+            position: relative;
+            margin-bottom: 10px; /* Espacio entre campos de contraseña */
+        }
+
+        .eye-icon {
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            font-size: 16px;
+        }
+
+        #password-strength {
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .user-type {
+            margin-top: 16px;
+            margin-bottom: 20px;
+        }
+
+        .user-type label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .user-type select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .flip-card__btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 18px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .flip-card__btn:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+>>>>>>> 34f54aead047d1da5e9d82f85232ea5a363816c8
 </head>
 <body>
 <div class="wrapper">
