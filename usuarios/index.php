@@ -146,131 +146,62 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro e Inicio de Sesión</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        .password-container {
-            position: relative;
-            margin-bottom: 10px; /* Espacio entre campos de contraseña */
-        }
-
-        .eye-icon {
-            cursor: pointer;
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: transparent;
-            border: none;
-            font-size: 16px;
-        }
-
-        #password-strength {
-            font-size: 14px;
-            margin-top: 4px;
-        }
-
-        .user-type {
-            margin-top: 16px;
-            margin-bottom: 20px;
-        }
-
-        .user-type label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .user-type select {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        .flip-card__btn {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            background-color: #007bff;
-            color: #fff;
-            font-size: 18px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .flip-card__btn:hover {
-            background-color: #0056b3;
-        }
-
-        .error-message {
-            color: red;
-            font-size: 14px;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/style_usuarios.css">
 </head>
 <body>
-    <div class="wrapper">
-        <div class="card-switch">
-            <label class="switch">
-                <input type="checkbox" class="toggle">
-                <span class="slider"></span>
-                <span class="card-side"></span>
-                <div class="flip-card__inner">
-                    <div class="flip-card__front">
-                        <div class="title">Iniciar Sesión</div>
-                        <form class="flip-card__form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-                            <input class="flip-card__input" name="email" placeholder="Email" type="email" minlength="5" maxlength="50" required>
+<div class="wrapper">
+    <div class="card-switch">
+        <label class="switch">
+            <input type="checkbox" class="toggle">
+            <span class="slider"></span>
+            <span class="card-side"></span>
+            <div class="flip-card__inner">
+                <!-- Front Side: Login -->
+                <div class="flip-card__front">
+                    <div class="title">Iniciar Sesión</div>
+                    <form class="flip-card__form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+                        <input class="flip-card__input" name="email" placeholder="Email" type="email" minlength="5" maxlength="50" required>
+                        <div class="password-container">
                             <input class="flip-card__input" id="login-password" name="password" placeholder="Contraseña" type="password" minlength="8" maxlength="8" required>
                             <button type="button" class="eye-icon" id="toggle-login-password"><i class="fa fa-eye"></i></button>
-                            <div class="user-type">
-                                <label for="user-type-login">Selecciona el tipo de usuario:</label>
-                                <select id="user-type-login" name="user_type">
-                                    <option value="administrador">Administrador</option>
-                                    <option value="recepcionista">Recepcionista</option>
-                                </select>
-                            </div>
-                            <button class="flip-card__btn" type="submit" name="login">Entrar</button>
-                        </form>
-                    </div>
-                    <div class="flip-card__back">
-                        <div class="title">Registrarse</div>
-                        <form class="flip-card__form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" onsubmit="return validarFormulario();">
-                            <input class="flip-card__input" id="nombre" name="nombre" placeholder="Nombre" type="text" minlength="5" maxlength="15" value="<?php echo htmlspecialchars($nombre); ?>" required>
-                            <span class="error-message"><?php echo $nombre_error; ?></span>
-
-                            <input class="flip-card__input" id="correo" name="correo" placeholder="Correo" type="email" minlength="5" maxlength="50" value="<?php echo htmlspecialchars($correo); ?>" required>
-                            <span class="error-message" id="correo-error-message">
-                                <?php echo !empty($correo_duplicado_error) ? $correo_duplicado_error : ''; ?>
-                            </span>
-
-                            <div class="password-container">
-                                <input class="flip-card__input" id="password" name="password" placeholder="Contraseña" type="password" minlength="8" maxlength="8" onkeyup="verificarFortalezaContrasena();" required>
-                                <button type="button" class="eye-icon" id="toggle-password"><i class="fa fa-eye"></i></button>
-                                <span id="password-strength"></span>
-                            </div>
-
-                            <div class="password-container">
-                                <input class="flip-card__input" id="confirmar_password" name="confirmar_password" placeholder="Confirmar Contraseña" type="password" minlength="8" maxlength="8" required>
-                                <button type="button" class="eye-icon" id="toggle-confirm-password"><i class="fa fa-eye"></i></button>
-                                <span class="error-message confirmar-password-error"><?php echo $confirmar_password_error; ?></span>
-                            </div>
-
-                            <div class="user-type">
-                                <select id="tipo_usuario" name="tipo_usuario">
-                                    <option value="recepcionista">Recepcionista</option>
-                                </select>
-                            </div>
-
-                            <button class="flip-card__btn" type="submit" name="registro">Registrar</button>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="user-type">
+                            <label for="user-type-login">Selecciona el tipo de usuario:</label>
+                            <select id="user-type-login" name="user_type">
+                                <option value="administrador">Administrador</option>
+                                <option value="recepcionista">Recepcionista</option>
+                            </select>
+                        </div>
+                        <button class="flip-card__btn" type="submit" name="login">Entrar</button>
+                    </form>
                 </div>
-            </label>
-        </div>
+
+                <!-- Back Side: Register -->
+                <div class="flip-card__back">
+                    <div class="title">Registrarse</div>
+                    <form class="flip-card__form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" onsubmit="return validarFormulario();">
+                        <input class="flip-card__input" id="nombre" name="nombre" placeholder="Nombre" type="text" minlength="5" maxlength="15" required>
+                        <input class="flip-card__input" id="correo" name="correo" placeholder="Correo" type="email" minlength="5" maxlength="50" required>
+                        <div class="password-container">
+                            <input class="flip-card__input" id="password" name="password" placeholder="Contraseña" type="password" minlength="8" maxlength="8" required>
+                            <button type="button" class="eye-icon" id="toggle-password"><i class="fa fa-eye"></i></button>
+                        </div>
+                        <div class="password-container">
+                            <input class="flip-card__input" id="confirmar_password" name="confirmar_password" placeholder="Confirmar Contraseña" type="password" minlength="8" maxlength="8" required>
+                            <button type="button" class="eye-icon" id="toggle-confirm-password"><i class="fa fa-eye"></i></button>
+                        </div>
+                        <div class="user-type">
+                            <select id="tipo_usuario" name="tipo_usuario">
+                                <option value="recepcionista">Recepcionista</option>
+                            </select>
+                        </div>
+                        <button class="flip-card__btn" type="submit" name="registro">Registrar</button>
+                    </form>
+                </div>
+            </div>
+        </label>
     </div>
+</div>
 
     <script>
         function checkEmailAvailability() {

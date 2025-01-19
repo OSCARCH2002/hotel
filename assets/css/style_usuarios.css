@@ -14,32 +14,29 @@ min-height: 100vh;
 background: url('../images/fondo.jpeg') no-repeat;
 background-size: cover;
 background-position: center;
+overflow: hidden; 
+
 }
-
-
-  .wrapper {
+.wrapper {
   width: 50px;
   height: 50px;
-  --input-focus: #2d8cf0;
-  --font-color: #323232;
-  --font-color-sub: #666;
-  --bg-color: #fff;
-  --bg-color-alt: #666;
-  --main-color: #323232;
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    margin: auto;
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -25px 0 0 -25px;
-  
-    
-    
+  --input-focus: #FF6F61;
+  --font-color: #2C3E50;
+  --font-color-sub: #7F8C8D;
+  --bg-color: #ECF0F1; 
+  --bg-color-alt: #BDC3C7; 
+  --main-color: #34495E; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  margin: auto;
+  justify-content: center;
+  position: absolute;
+  top: 37%;
+  left: 50%;
+  margin: -25px 0 0 -25px;
 }
-/* switch card */
+
 .switch {
   transform: translateY(-200px);
   position: relative;
@@ -60,8 +57,9 @@ background-position: center;
   width: 100px;
   text-decoration: underline;
   color: var(--font-color);
-  font-weight: 600;
-  color: white;
+  font-weight:bold;
+  color:whitesmoke;
+font-size: 20px;
 }
 
 .card-side::after {
@@ -72,8 +70,9 @@ background-position: center;
   width: 100px;
   text-decoration: none;
   color: var(--font-color);
-  font-weight: 600;
-  color:white;
+  font-weight:bold;
+  color: whitesmoke;
+font-size: 20px;
 }
 
 .toggle {
@@ -226,4 +225,65 @@ background-position: center;
   font-weight: 600;
   color: var(--font-color);
   cursor: pointer;
+}
+.password-container {
+  position: relative;
+  margin-bottom: 10px; 
+}
+
+.eye-icon {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 16px;
+}
+
+#password-strength {
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.user-type {
+  margin-top: 16px;
+  margin-bottom: 20px;
+}
+
+.user-type label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.user-type select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.flip-card__btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background-color: #FF6F61;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.flip-card__btn:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
 }

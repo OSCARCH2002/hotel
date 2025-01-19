@@ -1,6 +1,5 @@
 # Aplicacion de reservas🏢
 
-
 APlicacion web de reservas de el hotel micaela confort, ubicado en San Luis acatlan
 
 ---
