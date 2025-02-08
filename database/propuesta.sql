@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-12-2024 a las 05:14:00
+-- Tiempo de generación: 08-02-2025 a las 02:53:57
 -- Versión del servidor: 10.4.32-MariaDB-log
 -- Versión de PHP: 8.2.12
 
@@ -107,7 +107,9 @@ INSERT INTO `cliente` (`id`, `nombre`, `apellidos`, `telefono`) VALUES
 (110, 'REPLICACION', 'TEST', '5561518726'),
 (111, 'Nubia Jocelyn', 'Lopez', '7443441380'),
 (112, 'Juana', 'Apolonio', '7412931928'),
-(113, 'Lizbet', 'Carrillo', '7451043813');
+(113, 'Lizbet', 'Carrillo', '7451043813'),
+(114, 'Juan', 'Chavez', '7451043813'),
+(115, 'Juana', 'xd', '4543543536');
 
 -- --------------------------------------------------------
 
@@ -284,7 +286,9 @@ INSERT INTO `reservas` (`id`, `id_cliente`, `id_habitacion`, `fecha_llegada`, `f
 (71, 98, 2, '2024-11-14', '2024-11-15', 1, 1, 300.00),
 (72, 99, 2, '2024-11-12', '2024-11-13', 1, 0, 300.00),
 (73, 100, 7, '2024-11-06', '2024-11-07', 3, 1, 350.00),
-(75, 102, 1, '2024-11-23', '2024-11-24', 1, 1, 300.00);
+(75, 102, 1, '2024-11-23', '2024-11-24', 1, 1, 300.00),
+(79, 114, 1, '2024-12-31', '2025-01-01', 4, 1, 400.00),
+(80, 115, 2, '2025-01-07', '2025-01-07', 2, 2, 0.00);
 
 -- --------------------------------------------------------
 
@@ -425,7 +429,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT de la tabla `contacto`
@@ -461,7 +465,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT de la tabla `reservas`
 --
 ALTER TABLE `reservas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`

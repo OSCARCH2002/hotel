@@ -147,12 +147,10 @@ $conn->close();
     <title>Registro e Inicio de Sesión</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style_usuarios.css">
-<<<<<<< HEAD
-=======
     <style>
         .password-container {
             position: relative;
-            margin-bottom: 10px; /* Espacio entre campos de contraseña */
+            margin-bottom: 10px; 
         }
 
         .eye-icon {
@@ -212,7 +210,6 @@ $conn->close();
             font-size: 14px;
         }
     </style>
->>>>>>> 34f54aead047d1da5e9d82f85232ea5a363816c8
 </head>
 <body>
 <div class="wrapper">
