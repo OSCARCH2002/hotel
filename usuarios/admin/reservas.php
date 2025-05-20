@@ -138,6 +138,7 @@ $currentDate = date('Y-m-d');
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, quod placeat consectetur fugiat non iure eligendi ratione cupiditate corrupti molestiae quisquam alias officiis nihil quibusdam, assumenda aperiam nulla. Nihil, nisi!
         </div>
         <nav>
             <ul class="pagination justify-content-center">

@@ -188,7 +188,6 @@ try {
 
 
 
-        loadContent('./reservas.php');
     </script>
 </body>
 

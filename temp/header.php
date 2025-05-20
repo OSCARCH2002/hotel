@@ -4,230 +4,219 @@ $url = "http://$host/hotel/";
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Micaela</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+  <title>Hotel Quinta Micaela</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#884E40',
+              600: '#734035',
+              700: '#5f342b',
+              800: '#4c2921',
+              900: '#3a1f19'
+            },
+            light: '#F8F5F3',
+            cream: '#F0EAE6'
+          },
+          fontFamily: {
+            playfair: ['Playfair Display', 'serif'],
+            montserrat: ['Montserrat', 'sans-serif'],
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-in-out',
+            'slide-down': 'slideDown 0.5s ease-out',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideDown: {
+              '0%': { transform: 'translateY(-20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+          }
+        }
+      }
+    }
+  </script>
   <style>
-    body {
-      padding-top: 70px; 
-      font-family: 'Arial', sans-serif;
-      background-color: #f4f4f9;
-      margin: 0;
+    .mobile-menu {
+      transition: transform 0.3s ease-in-out;
     }
-
-    .navbar {
-      background-color: #23272F !important;
-      border-radius: 0;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    .mobile-menu-hidden {
+      transform: translateX(100%);
     }
-
-    .navbar-brand img {
-      border-radius: 50%;
-      height: 50px;
+    .mobile-menu-visible {
+      transform: translateX(0);
     }
-
     .nav-link {
-      font-size: 18px;
-      padding: 12px 20px;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      position: relative;
+      transition: all 0.3s ease;
     }
-
-    .nav-link:hover,
-    .nav-link:focus {
-      background-color: #002A32;
-      color: white;
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #884E40;
+      transition: width 0.3s ease;
     }
-
-    .nav-item {
-      margin-left: 15px;
+    .nav-link:hover:after {
+      width: 100%;
     }
-
-    .navbar-toggler {
-      border: none;
-      background-color: transparent; 
+    .nav-link:hover {
+      color: #884E40;
     }
-
-    .navbar-toggler-icon {
-      background-color: transparent; 
+    .nav-link-active {
+      color: #884E40;
     }
-
-    .navbar-toggler-icon:before,
-    .navbar-toggler-icon:after,
-    .navbar-toggler-icon span {
-      background-color: #fff; 
-    }
-
-    .btn-primary {
-      border: none;
-      border-radius: 5px;
-      padding: 12px 20px;
-      background-color: #002A32;
-      color: white;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
-
-    .btn-primary:hover {
-      background-color: #002A32;
-    }
-
-    @media (max-width: 1024px) {
-      .navbar-collapse {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        height: 100%;
-        width: 100%;
-        background-color: rgba(52, 58, 64, 0.9);
-        transition: transform 0.5s ease-out;
-        padding-top: 20px;
-        z-index: 9999;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      }
-
-      .navbar-collapse.show {
-        transform: translateX(0);
-        right: 0;
-      }
-
-      .nav-link {
-        font-size: 20px;
-        text-align: center;
-        display: block;
-        padding: 15px;
-        border-bottom: 1px solid #ddd;
-        transition: transform 0.3s ease;
-      }
-
-      .navbar-toggler {
-        display: block;
-      }
-
-      .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        color: white;
-        font-size: 36px;
-        cursor: pointer;
-        z-index: 10000;
-      }
-
-      .navbar-toggler:focus {
-        outline: none;
-      }
-
-      .navbar-toggler-icon {
-        background-color: transparent; 
-      }
-
-      .nav-item {
-        margin-bottom: 10px; 
-      }
-    }
-
-    @media (min-width: 1025px) {
-      .navbar-collapse {
-        display: flex !important;
-        justify-content: flex-end;
-      }
-
-      .navbar-nav {
-        display: flex;
-        justify-content: flex-end;
-      }
-
-      .close-btn {
-        display: none;
-      }
-
-      .nav-item {
-        margin-left: 20px;
-      }
-
-      .navbar-toggler {
-        display: none;
-      }
-    }
-
-    .section {
-      padding: 60px 20px;
-      text-align: center;
-      background-color: #fff;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-      margin: 20px 0;
-      border-radius: 10px;
-    }
-
-    .section h2 {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #333;
-    }
-
-    .section p {
-      font-size: 1.2rem;
-      color: #555;
-      line-height: 1.6;
+    .nav-link-active:after {
+      width: 100%;
     }
   </style>
 </head>
 
-<body>
-
+<body class="font-montserrat bg-light text-primary-800 pt-16">
   <!-- Barra de navegación -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <a class="navbar-brand" href="<?php echo $url; ?>">
-      <img src="<?php echo $url; ?>assets/images/logo.png" alt="Logo de Micaela Confort">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+          <a href="<?php echo $url; ?>" class="flex items-center">
+            <img class="h-12 w-12 rounded-full" src="<?php echo $url; ?>assets/images/logo.png" alt="Logo Hotel Quinta Micaela">
+            <span class="ml-3 text-xl font-playfair font-bold text-primary-700">Quinta Micaela</span>
+          </a>
+        </div>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <span class="close-btn" data-toggle="collapse" data-target="#navbarSupportedContent">&times;</span>
-      <ul class="navbar-nav">
-        <?php
-        $paginas = array(
-          "Principal" => "principal",
-          "Reservar" => "reservas",
-          "Evento" => "evento",
-          "Galería" => "galeria",
-          "Clima" => "clima",
-          "Contacto" => "contacto"
-        );
+        <!-- Menú desktop -->
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-center space-x-8">
+            <?php
+            $paginas = array(
+              "Principal" => "principal",
+              "Reservar" => "reservas",
+              "Evento" => "evento",
+              "Galería" => "galeria",
+              "Clima" => "clima",
+              "Contacto" => "contacto",
+              "Registrate" => "registro"
+            );
 
-        $iconos = array(
-          "Principal" => "fas fa-home",
-          "Reservar" => "fas fa-calendar-check",
-          "Evento" => "fas fa-calendar-alt",
-          "Galería" => "fas fa-images",
-          "Clima" => "fas fa-sun",
-          "Contacto" => "fas fa-envelope"
-        );
+            $iconos = array(
+              "Principal" => "fas fa-home",
+              "Reservar" => "fas fa-calendar-check",
+              "Evento" => "fas fa-calendar-alt",
+              "Galería" => "fas fa-images",
+              "Clima" => "fas fa-sun",
+              "Contacto" => "fas fa-envelope",
+              "Registrate" => "fas fa-user-plus"
+            );
 
-        foreach ($paginas as $nombre => $ruta) {
-          echo '<li class="nav-item">';
-          echo '<a class="nav-link" href="' . $url . 'pages/' . $ruta . '/"><i class="' . $iconos[$nombre] . '"></i> ' . $nombre . '</a>';
-          echo '</li>';
-        }
-        ?>
-      </ul>
+            foreach ($paginas as $nombre => $ruta) {
+              $activeClass = (basename($_SERVER['PHP_SELF']) == "$ruta.php") ? 'nav-link-active' : '';
+              echo '<a href="' . $url . 'pages/' . $ruta . '/" class="nav-link text-primary-600 px-3 py-2 text-sm font-medium flex items-center animate-fade-in ' . $activeClass . '">';
+              echo '<i class="' . $iconos[$nombre] . ' mr-2"></i>' . $nombre;
+              echo '</a>';
+            }
+            ?>
+          </div>
+        </div>
+
+        <!-- Botón móvil -->
+        <div class="md:hidden">
+          <button id="mobile-menu-button" class="text-primary-600 hover:text-primary-800 focus:outline-none">
+            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menú móvil -->
+    <div id="mobile-menu" class="mobile-menu mobile-menu-hidden md:hidden fixed inset-0 bg-white z-50 overflow-y-auto">
+      <div class="max-w-7xl mx-auto px-4 pt-24 pb-12 sm:px-6">
+        <div class="flex justify-end">
+          <button id="close-menu-button" class="text-primary-600 hover:text-primary-800 focus:outline-none mr-4 mt-4">
+            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="flex flex-col space-y-4 px-4">
+          <?php
+          foreach ($paginas as $nombre => $ruta) {
+            $activeClass = (basename($_SERVER['PHP_SELF']) == "$ruta.php" ? 'text-primary-700 font-bold' : 'text-primary-600');
+            echo '<a href="' . $url . 'pages/' . $ruta . '/" class="' . $activeClass . ' hover:text-primary-800 px-3 py-3 rounded-md text-lg font-medium border-b border-cream transition duration-300 flex items-center animate-slide-down">';
+            echo '<i class="' . $iconos[$nombre] . ' mr-3"></i>' . $nombre;
+            echo '</a>';
+          }
+          ?>
+        </div>
+      </div>
     </div>
   </nav>
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+  <script>
+    // Menu mobile toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const closeMenuButton = document.getElementById('close-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.remove('mobile-menu-hidden');
+      mobileMenu.classList.add('mobile-menu-visible');
+      document.body.style.overflow = 'hidden';
+    });
+
+    closeMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.remove('mobile-menu-visible');
+      mobileMenu.classList.add('mobile-menu-hidden');
+      document.body.style.overflow = 'auto';
+    });
+
+    // Cerrar menú al hacer clic en un enlace
+    const mobileLinks = document.querySelectorAll('#mobile-menu a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('mobile-menu-visible');
+        mobileMenu.classList.add('mobile-menu-hidden');
+        document.body.style.overflow = 'auto';
+      });
+    });
+
+    // Animación de elementos del menú
+    const navLinks = document.querySelectorAll('.animate-fade-in');
+    navLinks.forEach((link, index) => {
+      link.style.animationDelay = `${index * 0.1}s`;
+    });
+
+    const mobileNavLinks = document.querySelectorAll('.animate-slide-down');
+    mobileNavLinks.forEach((link, index) => {
+      link.style.animationDelay = `${index * 0.1}s`;
+    });
+
+    // Detectar página activa
+    const currentPage = window.location.pathname.split('/').pop() || 'principal';
+    document.querySelectorAll('.nav-link').forEach(link => {
+      if (link.getAttribute('href').includes(currentPage)) {
+        link.classList.add('nav-link-active');
+      }
+    });
+  </script>
 </body>
-
-</html> 
+</html>
