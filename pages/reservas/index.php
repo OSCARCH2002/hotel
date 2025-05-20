@@ -300,7 +300,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </button>
 
                 <div class="mt-8 bg-white rounded-xl p-6 shadow-lg">
-                    <h3 class="text-xl font-playfair font-bold mb-4 text-primary-700 border-b border-primary-500 pb-2 inline-block">Políticas</h3>
+                    <h3 class="text-xl font-playfair font-bold mb-4 text-primary-700 border-b border-primary-500 pb-2 inline-block"></h3>
                     <ul class="space-y-3 text-primary-600">
                         <li class="flex items-start">
                             <i class="fas fa-check-circle text-primary-500 mr-2 mt-1"></i>

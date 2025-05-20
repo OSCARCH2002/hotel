@@ -343,7 +343,7 @@
                             <p class="text-primary-500 tracking-widest mb-2">HOSPEDAJE</p>
                             <h3 class="text-xl font-playfair mb-4 text-primary-700">Habitaciones Exclusivas</h3>
                             <p class="text-primary-600 mb-6">
-                                Habitaciones diseñadas con los más altos estándares de confort y elegancia, con amenidades exclusivas y servicio personalizado.
+                                Habitaciones diseñadas con los más altos estándares de confort y elegancia.
                             </p>
                             <div class="flex items-center text-primary-500 group-hover:text-primary-700 transition">
                                 <span class="mr-2 font-medium">Explorar Opciones</span>
@@ -363,7 +363,7 @@
                             <p class="text-primary-500 tracking-widest mb-2">EVENTOS</p>
                             <h3 class="text-xl font-playfair mb-4 text-primary-700">Salón de Eventos</h3>
                             <p class="text-primary-600 mb-6">
-                                Espacios diseñados para eventos memorables, con planificación profesional, catering gourmet y atención meticulosa a cada detalle.
+                                Contamos con un espacio para eventos de todo tipo.
                             </p>
                             <div class="flex items-center text-primary-500 group-hover:text-primary-700 transition">
                                 <span class="mr-2 font-medium">Planificar Evento</span>
