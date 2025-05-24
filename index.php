@@ -126,8 +126,7 @@
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16">
                 <p class="text-primary-500 tracking-widest mb-3">EXPERIENCIA</p>
-                <h2 class="text-3xl md:text-4xl font-playfair text-primary-700 mb-6 section-title">Nuestras Exclusividades</h2>
-                <p class="text-primary-600 max-w-2xl mx-auto">Diseñado para quienes aprecian los detalles y la excelencia en cada aspecto</p>
+                <h2 class="text-3xl md:text-4xl font-playfair text-primary-700 mb-6 section-title">Nuestras amenidades</h2>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -281,37 +280,27 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="relative overflow-hidden rounded-sm h-80 group">
                     <img src="./assets/images/EventoXD.jpeg" alt="Spa" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-primary-800 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
-                        <h3 class="text-xl font-playfair text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-500">Spa & Wellness</h3>
-                    </div>
+                 
                 </div>
                 
                 <div class="relative overflow-hidden rounded-sm h-80 group">
                     <img src="./assets/images/evento3.jpeg" alt="Piscina" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-primary-800 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
-                        <h3 class="text-xl font-playfair text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-500">Piscina Infinity</h3>
-                    </div>
+                 
                 </div>
                 
                 <div class="relative overflow-hidden rounded-sm h-80 md:col-span-2 lg:col-span-1 lg:row-span-2 group">
                     <img src="./assets/images/fondo.jpeg" alt="Salón de Eventos" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-primary-800 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
-                        <h3 class="text-2xl font-playfair text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-500">Salón de Eventos</h3>
-                    </div>
+                   
                 </div>
                 
                 <div class="relative overflow-hidden rounded-sm h-80 group">
                     <img src="./assets/images/Establecimiento.jpg" alt="Lobby" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-primary-800 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
-                        <h3 class="text-xl font-playfair text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-500">Lobby Principal</h3>
-                    </div>
+                   
                 </div>
                 
                 <div class="relative overflow-hidden rounded-sm h-80 group">
                     <img src="./assets/images/fondo1.jpeg" alt="Vistas" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-primary-800 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
-                        <h3 class="text-xl font-playfair text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-500">Vistas Exclusivas</h3>
-                    </div>
+                   
                 </div>
             </div>
             
@@ -341,7 +330,7 @@
                         </div>
                         <div class="p-8">
                             <p class="text-primary-500 tracking-widest mb-2">HOSPEDAJE</p>
-                            <h3 class="text-xl font-playfair mb-4 text-primary-700">Habitaciones Exclusivas</h3>
+                            <h3 class="text-xl font-playfair mb-4 text-primary-700">Habitaciones</h3>
                             <p class="text-primary-600 mb-6">
                                 Habitaciones diseñadas con los más altos estándares de confort y elegancia.
                             </p>

@@ -162,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="text-center">
             <h1 class="text-4xl md:text-5xl font-playfair font-bold mb-4 text-white animate-fade-in">Eventos Exclusivos</h1>
             <p class="text-xl text-white max-w-3xl mx-auto animate-fade-in animation-delay-100">
-                Celebre sus momentos especiales en un entorno de lujo y elegancia
+                Celebre sus momentos especiales en la Quinta Micaela
             </p>
         </div>
     </div>
@@ -251,11 +251,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-check-circle text-primary-500 mr-3 mt-1"></i>
-                            <span>Atención profesional</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-primary-500 mr-3 mt-1"></i>
-                            <span>Coordinador de eventos dedicado</span>
+                            <span>Atención dedicada</span>
                         </li>
                     </ul>
                 </div>

@@ -27,6 +27,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $totalNinos = intval($_POST['totalNinos']);
     $totalPagar = $conn->real_escape_string(trim($_POST['totalPagar']));
 
+    // Validar si hay una promoción y si las fechas están dentro del rango
+    if (isset($_GET['promocion'])) {
+        $promocionId = intval($_GET['promocion']);
+        $stmt = $conn->prepare("SELECT * FROM promociones_habitaciones WHERE id = ? AND estado = 'activa'");
+        $stmt->bind_param("i", $promocionId);
+        $stmt->execute();
+        $promocion = $stmt->get_result()->fetch_assoc();
+        $stmt->close();
+
+        if ($promocion) {
+            if (!validarFechaPromocion($fechaLlegada, $promocion) || !validarFechaPromocion($fechaSalida, $promocion)) {
+                echo "<script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Promoción no válida',
+                        html: 'Las fechas seleccionadas están fuera del rango de la promoción.<br>La promoción es válida del " . 
+                        date('d/m/Y', strtotime($promocion['fecha_inicio'])) . " al " . 
+                        date('d/m/Y', strtotime($promocion['fecha_fin'])) . "',
+                        confirmButtonColor: '#884E40'
+                    });
+                </script>";
+                exit();
+            }
+        }
+    }
+
     $fecha1 = new DateTime($fechaLlegada);
     $fecha2 = new DateTime($fechaSalida);
     $diferencia = $fecha2->diff($fecha1);
@@ -109,8 +135,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $stmt->close();
-    $conn->close();
 }
+
+// Obtener datos de la promoción si existe
+$promocion = null;
+if (isset($_GET['promocion'])) {
+    $promocionId = intval($_GET['promocion']);
+    $stmt = $conn->prepare("SELECT ph.*, h.precio_noche 
+                           FROM promociones_habitaciones ph 
+                           JOIN habitacion h ON ph.id_habitacion = h.id 
+                           WHERE ph.id = ? AND ph.estado = 'activa'");
+    $stmt->bind_param("i", $promocionId);
+    $stmt->execute();
+    $promocion = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+}
+
+// Obtener datos del cliente si está en sesión o en la URL
+$clienteData = null;
+if (isset($_SESSION['id_cliente'])) {
+    $stmt = $conn->prepare("SELECT nombre, apellidos, telefono FROM cliente WHERE id = ?");
+    $stmt->bind_param("i", $_SESSION['id_cliente']);
+    $stmt->execute();
+    $clienteData = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+} else if (isset($_GET['nombre']) && isset($_GET['apellidos']) && isset($_GET['telefono'])) {
+    $clienteData = [
+        'nombre' => $_GET['nombre'],
+        'apellidos' => $_GET['apellidos'],
+        'telefono' => $_GET['telefono']
+    ];
+}
+
+// Asegurarse de que los datos de la sesión tengan prioridad
+if (isset($_SESSION['nombre']) && isset($_SESSION['apellidos']) && isset($_SESSION['telefono'])) {
+    $clienteData = [
+        'nombre' => $_SESSION['nombre'],
+        'apellidos' => $_SESSION['apellidos'],
+        'telefono' => $_SESSION['telefono']
+    ];
+}
+
+// Función para validar si una fecha está dentro del rango de la promoción
+function validarFechaPromocion($fecha, $promocion) {
+    if (!$promocion) return true;
+    
+    $fecha = new DateTime($fecha);
+    $fechaInicio = new DateTime($promocion['fecha_inicio']);
+    $fechaFin = new DateTime($promocion['fecha_fin']);
+    
+    return $fecha >= $fechaInicio && $fecha <= $fechaFin;
+}
+
+// Cerrar la conexión al final del script
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -310,10 +388,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <i class="fas fa-check-circle text-primary-500 mr-2 mt-1"></i>
                             <span>Máximo 2 adultos + 2 niños por habitación</span>
                         </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-primary-500 mr-2 mt-1"></i>
-                            <span>Cancelaciones con 48 hrs de anticipación</span>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -367,9 +442,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div>
                             <label for="roomNumber" class="block text-primary-600 mb-2">Número de Habitación</label>
                             <select id="roomNumber" name="roomNumber" class="w-full bg-primary-50 border border-primary-200 rounded-lg px-4 py-3 text-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 input-focus" required>
-                                <option value="" disabled selected>Seleccione una habitación</option>
-                                <?php for ($i = 1; $i <= 7; $i++): ?>
-                                    <option value="<?php echo $i; ?>">Habitación <?php echo $i; ?></option>
+                                <option value="" disabled <?php echo !isset($_GET['habitacion']) ? 'selected' : ''; ?>>Seleccione una habitación</option>
+                                <?php 
+                                $habitacionSeleccionada = isset($_GET['habitacion']) ? intval($_GET['habitacion']) : 0;
+                                for ($i = 1; $i <= 7; $i++): 
+                                ?>
+                                    <option value="<?php echo $i; ?>" <?php echo ($i === $habitacionSeleccionada) ? 'selected' : ''; ?>>
+                                        Habitación <?php echo $i; ?>
+                                    </option>
                                 <?php endfor; ?>
                             </select>
                         </div>
@@ -377,17 +457,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label for="nombre" class="block text-primary-600 mb-2">Nombre</label>
-                                <input type="text" id="nombre" name="nombre" pattern="[A-Za-zÀ-ÿ\s]+" title="Solo se permiten letras y espacios" class="w-full bg-primary-50 border border-primary-200 rounded-lg px-4 py-3 text-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 input-focus" required>
+                                <input type="text" id="nombre" name="nombre" pattern="[A-Za-zÀ-ÿ\s]+" title="Solo se permiten letras y espacios" 
+                                    value="<?php echo isset($clienteData['nombre']) ? htmlspecialchars($clienteData['nombre']) : ''; ?>"
+                                    class="w-full bg-primary-50 border border-primary-200 rounded-lg px-4 py-3 text-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 input-focus" required>
                             </div>
                             <div>
                                 <label for="apellidos" class="block text-primary-600 mb-2">Apellidos</label>
-                                <input type="text" id="apellidos" name="apellidos" pattern="[A-Za-zÀ-ÿ\s]+" title="Solo se permiten letras y espacios" class="w-full bg-primary-50 border border-primary-200 rounded-lg px-4 py-3 text-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 input-focus" required>
+                                <input type="text" id="apellidos" name="apellidos" pattern="[A-Za-zÀ-ÿ\s]+" title="Solo se permiten letras y espacios" 
+                                    value="<?php echo isset($clienteData['apellidos']) ? htmlspecialchars($clienteData['apellidos']) : ''; ?>"
+                                    class="w-full bg-primary-50 border border-primary-200 rounded-lg px-4 py-3 text-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 input-focus" required>
                             </div>
                         </div>
 
                         <div>
                             <label for="telefono" class="block text-primary-600 mb-2">Teléfono</label>
-                            <input type="text" id="telefono" name="telefono" maxlength="10" pattern="\d{10}" title="Debe contener exactamente 10 dígitos" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full bg-primary-50 border border-primary-200 rounded-lg px-4 py-3 text-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 input-focus" required>
+                            <input type="text" id="telefono" name="telefono" maxlength="10" pattern="\d{10}" title="Debe contener exactamente 10 dígitos" 
+                                value="<?php echo isset($_SESSION['telefono']) ? htmlspecialchars($_SESSION['telefono']) : (isset($clienteData['telefono']) ? htmlspecialchars($clienteData['telefono']) : ''); ?>"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '')" 
+                                class="w-full bg-primary-50 border border-primary-200 rounded-lg px-4 py-3 text-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 input-focus" required>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -446,12 +533,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Set minimum date for arrival
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('fechaLlegada').setAttribute('min', today);
+
+            // Asegurarse de que los campos se muestren correctamente
+            const habitacionSelect = document.getElementById('roomNumber');
+            if (habitacionSelect.value) {
+                habitacionSelect.dispatchEvent(new Event('change'));
+            }
         }
 
         function closeReservationModal() {
             document.getElementById('reservationModal').classList.add('hidden');
             document.body.style.overflow = 'auto';
         }
+
+        // Verificar si hay parámetros de promoción en la URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('promocion') && urlParams.has('habitacion')) {
+                // Asegurarse de que los campos se autocompleten antes de abrir el modal
+                const habitacionSelect = document.getElementById('roomNumber');
+                const nombreInput = document.getElementById('nombre');
+                const apellidosInput = document.getElementById('apellidos');
+                const telefonoInput = document.getElementById('telefono');
+
+                // Si los campos tienen valores, asegurarse de que se muestren
+                if (habitacionSelect.value) {
+                    habitacionSelect.dispatchEvent(new Event('change'));
+                }
+                if (nombreInput.value) {
+                    nombreInput.dispatchEvent(new Event('input'));
+                }
+                if (apellidosInput.value) {
+                    apellidosInput.dispatchEvent(new Event('input'));
+                }
+                if (telefonoInput.value) {
+                    telefonoInput.dispatchEvent(new Event('input'));
+                    // Asegurarse de que el teléfono tenga el formato correcto
+                    telefonoInput.value = telefonoInput.value.replace(/[^0-9]/g, '');
+                }
+
+                // Abrir el modal después de un pequeño delay para asegurar que los campos estén actualizados
+                setTimeout(() => {
+                    openReservationModal();
+                }, 100);
+            }
+        });
 
         // Price calculation
         document.addEventListener('DOMContentLoaded', function() {
@@ -460,9 +586,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             const fechaLlegadaInput = document.getElementById('fechaLlegada');
             const fechaSalidaInput = document.getElementById('fechaSalida');
 
-            const precioPorNoche = 300;
+            const precioPorNoche = <?php echo isset($promocion) ? $promocion['precio_noche'] * (1 - $promocion['descuento']/100) : 300; ?>;
             const precioRenta = 1800;
             const comisionPorAdultoExtra = 50;
+
+            // Si hay una promoción, mostrar un mensaje
+            <?php if (isset($promocion)): ?>
+            Swal.fire({
+                icon: 'success',
+                title: '¡Promoción Aplicada!',
+                html: `<div class="text-left">
+                    <p class="mb-2">Has aplicado una promoción con:</p>
+                    <ul class="list-disc pl-5 mb-3">
+                        <li>Descuento: ${<?php echo $promocion['descuento']; ?>}%</li>
+                        <li>Precio por noche: $${precioPorNoche}</li>
+                    </ul>
+                    <p class="text-sm text-gray-600">Por favor, completa los datos restantes para finalizar tu reserva.</p>
+                </div>`,
+                confirmButtonColor: '#884E40',
+                confirmButtonText: 'Completar Reserva'
+            });
+            <?php endif; ?>
 
             function calcularTotal() {
                 const totalAdultos = parseInt(totalAdultosInput.value) || 0;
@@ -515,6 +659,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     });
                     this.value = '';
                 }
+
+                // Validar si la fecha está dentro del rango de la promoción
+                <?php if (isset($promocion)): ?>
+                if (!validarFechaPromocion(this.value, <?php echo json_encode($promocion); ?>)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Promoción no válida',
+                        html: `La fecha seleccionada está fuera del rango de la promoción.<br>
+                               La promoción es válida del ${new Date('<?php echo $promocion['fecha_inicio']; ?>').toLocaleDateString()} 
+                               al ${new Date('<?php echo $promocion['fecha_fin']; ?>').toLocaleDateString()}`,
+                        confirmButtonColor: '#884E40'
+                    });
+                    this.value = '';
+                }
+                <?php endif; ?>
+
                 fechaSalidaInput.setAttribute('min', this.value);
                 calcularTotal();
             });
@@ -529,8 +689,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     });
                     this.value = '';
                 }
+
+                // Validar si la fecha está dentro del rango de la promoción
+                <?php if (isset($promocion)): ?>
+                if (!validarFechaPromocion(this.value, <?php echo json_encode($promocion); ?>)) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Promoción no válida',
+                        html: `La fecha seleccionada está fuera del rango de la promoción.<br>
+                               La promoción es válida del ${new Date('<?php echo $promocion['fecha_inicio']; ?>').toLocaleDateString()} 
+                               al ${new Date('<?php echo $promocion['fecha_fin']; ?>').toLocaleDateString()}`,
+                        confirmButtonColor: '#884E40'
+                    });
+                    this.value = '';
+                }
+                <?php endif; ?>
+
                 calcularTotal();
             });
+
+            // Agregar la función de validación de fecha de promoción
+            function validarFechaPromocion(fecha, promocion) {
+                if (!promocion) return true;
+                
+                const fechaSeleccionada = new Date(fecha);
+                const fechaInicio = new Date(promocion.fecha_inicio);
+                const fechaFin = new Date(promocion.fecha_fin);
+                
+                return fechaSeleccionada >= fechaInicio && fechaSeleccionada <= fechaFin;
+            }
 
             // Initialize date inputs
             const today = new Date().toISOString().split('T')[0];

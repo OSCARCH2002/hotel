@@ -302,10 +302,6 @@ try {
                             <div class="detail-label">Número de personas</div>
                             <div class="detail-value"><?php echo $evento['num_personas']; ?> invitados</div>
                         </div>
-                        <div class="detail-card">
-                            <div class="detail-label">Estado de la reserva</div>
-                            <div class="detail-value" style="color: #10b981;">Confirmado <i class="fas fa-check-circle"></i></div>
-                        </div>
                     </div>
                 </div>
                 

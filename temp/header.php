@@ -113,7 +113,8 @@ $url = "http://$host/hotel/";
               "Galería" => "galeria",
               "Clima" => "clima",
               "Contacto" => "contacto",
-              "Registrate" => "registro"
+              "Promociones" => "promociones",
+              "Registrate" => "registro",
             );
 
             $iconos = array(
@@ -123,6 +124,7 @@ $url = "http://$host/hotel/";
               "Galería" => "fas fa-images",
               "Clima" => "fas fa-sun",
               "Contacto" => "fas fa-envelope",
+              "Promociones" => "fas fa-percent",
               "Registrate" => "fas fa-user-plus"
             );
 

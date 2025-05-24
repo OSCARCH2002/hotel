@@ -83,29 +83,8 @@
           <a href="https://es-la.facebook.com/" target="_blank" class="social-icon bg-white text-primary-700 w-10 h-10 rounded-full flex items-center justify-center">
             <i class="fab fa-facebook-f"></i>
           </a>
-          <a href="#" target="_blank" class="social-icon bg-white text-primary-700 w-10 h-10 rounded-full flex items-center justify-center">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="#" target="_blank" class="social-icon bg-white text-primary-700 w-10 h-10 rounded-full flex items-center justify-center">
-            <i class="fab fa-whatsapp"></i>
-          </a>
-        </div>
-        
-        <!-- Horario -->
-        <div class="mt-8">
-          <h6 class="text-lg font-playfair font-bold mb-3 text-white border-b border-primary-500 pb-2 inline-block">
-            Horario
-          </h6>
-          <p class="text-primary-100">
-            <i class="fas fa-clock text-primary-500 mr-2"></i> 24 horas / 7 días
-          </p>
         </div>
       </div>
-    </div>
-
-    <!-- Derechos de autor -->
-    <div class="border-t border-primary-700 mt-12 pt-6 text-center text-primary-300 text-sm">
-      <p>&copy; <?php echo date('Y'); ?> Hotel Quinta Micaela. Todos los derechos reservados.</p>
     </div>
   </div>
 </footer>

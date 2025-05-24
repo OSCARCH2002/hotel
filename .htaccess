@@ -3,3 +3,27 @@ Options -Indexes
     Deny from all
 </FilesMatch>
 
+# Habilitar el motor de reescritura
+RewriteEngine On
+
+# Manejar errores personalizados
+ErrorDocument 403 /hotel/pages/error/403.php
+ErrorDocument 404 /hotel/pages/error/404.php
+ErrorDocument 500 /hotel/pages/error/500.php
+
+# Permitir acceso a la página de error
+<Files "403.php">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+# Proteger el archivo .htaccess
+<Files .htaccess>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Configuración de PHP
+php_flag display_errors off
+php_value error_reporting E_ALL
+

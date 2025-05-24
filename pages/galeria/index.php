@@ -304,93 +304,60 @@
       <!-- Item 1 -->
       <div class="gallery-item" data-category="instalaciones">
         <img src="../../assets/images/Establecimiento.jpg" alt="Nuestro establecimiento" class="gallery-img">
-        <div class="gallery-caption">
-          <h3>Nuestro Establecimiento</h3>
-          <p>Arquitectura tradicional con toques modernos</p>
-        </div>
+        
       </div>
       
       <!-- Item 2 -->
       <div class="gallery-item" data-category="habitaciones">
         <img src="../../assets/images/huesped.jpeg" alt="Habitación estándar" class="gallery-img">
-        <div class="gallery-caption">
-          <h3>Habitación Estándar</h3>
-          <p>Comodidad y elegancia para tu estancia</p>
-        </div>
+        
       </div>
       
       <!-- Item 3 -->
       <div class="gallery-item" data-category="eventos">
         <img src="../../assets/images/EventoXD.jpeg" alt="Salón de eventos" class="gallery-img">
-        <div class="gallery-caption">
-          <h3>Salón de Eventos</h3>
-          <p>Espacio perfecto para tus celebraciones</p>
-        </div>
+        
       </div>
       
       <!-- Item 4 -->
       <div class="gallery-item" data-category="instalaciones">
         <img src="../../assets/images/alberca - copia.jpeg" alt="Área de alberca" class="gallery-img">
-        <div class="gallery-caption">
-          <h3>Área de Alberca</h3>
-          <p>Disfruta de nuestro espacio acuático</p>
-        </div>
+        
       </div>
       
       <!-- Item 5 -->
       <div class="gallery-item" data-category="alrededores">
         <img src="../../assets/images/Zocalo.jpg" alt="Zócalo de San Luis Acatlán" class="gallery-img">
-        <div class="gallery-caption">
-          <h3>Zócalo Municipal</h3>
-          <p>Corazón de San Luis Acatlán</p>
-        </div>
+        
       </div>
       
       <!-- Item 6 -->
       <div class="gallery-item" data-category="eventos">
         <img src="../../assets/images/evento3.jpeg" alt="Evento social" class="gallery-img">
-        <div class="gallery-caption">
-          <h3>Evento Social</h3>
-          <p>Celebraciones memorables en nuestro hotel</p>
-        </div>
+       
       </div>
       
       <!-- Item 7 -->
       <div class="gallery-item" data-category="alrededores">
         <img src="../../assets/images/Jardin.jpg" alt="Jardín central" class="gallery-img">
-        <div class="gallery-caption">
-          <h3>Jardín Central</h3>
-          <p>Patrimonio cultural de la región</p>
-        </div>
+       
       </div>
       
       <!-- Item 8 -->
       <div class="gallery-item" data-category="instalaciones">
         <img src="../../assets/images/fondo.jpeg" alt="Vista del hotel" class="gallery-img">
-        <div class="gallery-caption">
-          <h3>Vista del Hotel</h3>
-          <p>Nuestras instalaciones desde otra perspectiva</p>
-        </div>
+    
       </div>
       
       <!-- Item 9 -->
       <div class="gallery-item" data-category="habitaciones">
         <img src="../../assets/images/fondo1.jpeg" alt="Habitación premium" class="gallery-img">
-        <div class="gallery-caption">
-          <h3>Habitación Premium</h3>
-          <p>Mayor espacio y comodidades exclusivas</p>
-        </div>
+        
       </div>
       
       <!-- Item 10 -->
       <div class="gallery-item" data-category="instalaciones">
         <img src="../../assets/images/Villa.jpg" alt="Villa privada" class="gallery-img">
-        <div class="gallery-caption">
-          <h3>Villa Privada</h3>
-          <p>Espacio exclusivo para eventos especiales</p>
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- Lightbox para ver imágenes en grande -->
